@@ -1,144 +1,198 @@
-export interface CalculatorInputs {
-  currentProductivity: number;
-  errorRate: number;
-  processingTime: number;
-  resourceUtilization: number;
-  trainingDataSize: number;
-  trainingDuration: number;
-  modelComplexity: 'basic' | 'intermediate' | 'advanced';
-  expectedAccuracy: number;
-  hourlyLabor: number;
-  dailyVolume: number;
-  errorCost: number;
-  implementationCost: number;
-}
-
-export interface CalculationResults {
-  efficiencyImprovement: number;
-  timeSavings: number;
-  errorReduction: number;
-  costSavings: number;
-  roi: number;
-  paybackPeriod: number;
-}
+import { IndividualCalculatorInputs, IndividualCalculatorResults, TeamCalculatorInputs, TeamCalculatorResults } from "@shared/schema";
 
 export interface Insight {
   type: 'success' | 'info' | 'warning';
   message: string;
 }
 
-export function calculateEfficiencyLift(inputs: CalculatorInputs): CalculationResults {
-  // Model complexity factors
-  const complexityFactors = {
-    basic: { accuracy: 0.8, efficiency: 1.2, training: 0.8 },
-    intermediate: { accuracy: 0.9, efficiency: 1.5, training: 1.0 },
-    advanced: { accuracy: 0.95, efficiency: 1.8, training: 1.3 }
-  };
-
-  const factor = complexityFactors[inputs.modelComplexity];
+// Individual Calculator Functions
+export function calculateIndividualValue(inputs: IndividualCalculatorInputs): IndividualCalculatorResults {
+  // Part 1: Value Analysis
+  const costPerHour = inputs.comp / inputs.workHours;
+  const valueOfWorkPerHour = costPerHour * inputs.valueOfWorkMultiple;
+  const annualValueOfWork = inputs.workHours * valueOfWorkPerHour;
+  const valueOfProductivityLift = annualValueOfWork * (inputs.estProductivityLift / 100);
+  const newAnnualValueOfWork = annualValueOfWork + valueOfProductivityLift;
   
-  // Calculate AI-driven improvements
-  const accuracyImprovement = (inputs.expectedAccuracy / 100) * factor.accuracy;
-  const baseEfficiencyGain = Math.min(accuracyImprovement * factor.efficiency, 2.0); // Cap at 200%
+  // Part 2: Cost Analysis
+  const aiTrainingHumanCosts = inputs.aiTrainingHours * costPerHour;
+  const totalAiTrainingCosts = aiTrainingHumanCosts + inputs.aiTrainingLicenseFees;
+  const totalAiCosts = totalAiTrainingCosts + inputs.aiTechCosts;
   
-  // Calculate efficiency improvement percentage
-  const efficiencyImprovement = baseEfficiencyGain * 100;
-  
-  // Calculate time savings based on processing time improvement
-  const timeReductionFactor = 1 - (1 / (1 + baseEfficiencyGain));
-  const timeSavings = (inputs.processingTime * timeReductionFactor * inputs.dailyVolume) / 60; // hours per day
-  
-  // Calculate error reduction
-  const errorReduction = Math.min(inputs.errorRate * accuracyImprovement * 0.8, inputs.errorRate * 0.9); // Max 90% reduction
-  
-  // Calculate daily cost savings
-  const laborSavingsPerDay = timeSavings * inputs.hourlyLabor;
-  const errorSavingsPerDay = (inputs.dailyVolume * (inputs.errorRate / 100) * errorReduction / 100) * inputs.errorCost;
-  const totalDailySavings = laborSavingsPerDay + errorSavingsPerDay;
-  
-  // Monthly cost savings
-  const costSavings = totalDailySavings * 22; // 22 working days per month
-  
-  // Annual savings and ROI
-  const annualSavings = costSavings * 12;
-  const roi = ((annualSavings - inputs.implementationCost) / inputs.implementationCost) * 100;
-  
-  // Payback period in months
-  const paybackPeriod = inputs.implementationCost / costSavings;
+  // Part 3: Net Value Estimate
+  const firstYearNetValue = valueOfProductivityLift - totalAiCosts;
+  const roi = (firstYearNetValue / totalAiCosts) * 100;
   
   return {
-    efficiencyImprovement: Math.round(efficiencyImprovement * 10) / 10,
-    timeSavings: Math.round(timeSavings * 10) / 10,
-    errorReduction: Math.round((errorReduction / inputs.errorRate) * 1000) / 10,
-    costSavings: Math.round(costSavings),
-    roi: Math.round(roi * 10) / 10,
-    paybackPeriod: Math.round(paybackPeriod * 10) / 10
+    costPerHour: Math.round(costPerHour),
+    valueOfWorkPerHour: Math.round(valueOfWorkPerHour),
+    annualValueOfWork: Math.round(annualValueOfWork),
+    valueOfProductivityLift: Math.round(valueOfProductivityLift),
+    newAnnualValueOfWork: Math.round(newAnnualValueOfWork),
+    aiTrainingHumanCosts: Math.round(aiTrainingHumanCosts),
+    totalAiTrainingCosts: Math.round(totalAiTrainingCosts),
+    totalAiCosts: Math.round(totalAiCosts),
+    firstYearNetValue: Math.round(firstYearNetValue),
+    roi: Math.round(roi * 100) / 100
   };
 }
 
-export function generateInsights(inputs: CalculatorInputs, results: CalculationResults): Insight[] {
+// Team Calculator Functions
+export function calculateTeamValue(inputs: TeamCalculatorInputs): TeamCalculatorResults {
+  // Part 1: Value Analysis
+  const combinedWorkHours = inputs.averageWorkHours * inputs.numberOfLearners;
+  const blendedCostPerHour = inputs.combinedComp / combinedWorkHours;
+  const blendedValueOfWorkPerHour = blendedCostPerHour * inputs.valueOfWorkMultiple;
+  const avgAnnualValueOfWork = inputs.averageWorkHours * blendedValueOfWorkPerHour;
+  const avgValueOfProductivityLift = avgAnnualValueOfWork * (inputs.estProductivityLift / 100);
+  const avgNewAnnualValueOfWork = avgAnnualValueOfWork + avgValueOfProductivityLift;
+  const totalValueOfProductivityLift = avgValueOfProductivityLift * inputs.numberOfLearners;
+  
+  // Part 2: Cost Analysis
+  const combinedAiTrainingHours = inputs.numberOfLearners * inputs.aiTrainingHoursPerLearner;
+  const combinedAiTrainingHumanCosts = combinedAiTrainingHours * blendedCostPerHour;
+  const combinedAiTrainingLicenseFees = inputs.aiTrainingLicenseFeesPerLearner * inputs.numberOfLearners;
+  const totalAiTrainingCosts = combinedAiTrainingHumanCosts + combinedAiTrainingLicenseFees;
+  const totalAiTechCosts = inputs.aiTechCostsPerLearner * inputs.numberOfLearners;
+  const totalAiCosts = totalAiTrainingCosts + totalAiTechCosts;
+  
+  // Part 3: Net Value Estimate
+  const firstYearNetValue = totalValueOfProductivityLift - totalAiCosts;
+  const roi = (firstYearNetValue / totalAiCosts) * 100;
+  
+  return {
+    combinedWorkHours: Math.round(combinedWorkHours),
+    blendedCostPerHour: Math.round(blendedCostPerHour),
+    blendedValueOfWorkPerHour: Math.round(blendedValueOfWorkPerHour),
+    avgAnnualValueOfWork: Math.round(avgAnnualValueOfWork),
+    avgValueOfProductivityLift: Math.round(avgValueOfProductivityLift),
+    avgNewAnnualValueOfWork: Math.round(avgNewAnnualValueOfWork),
+    totalValueOfProductivityLift: Math.round(totalValueOfProductivityLift),
+    combinedAiTrainingHours: Math.round(combinedAiTrainingHours),
+    combinedAiTrainingHumanCosts: Math.round(combinedAiTrainingHumanCosts),
+    combinedAiTrainingLicenseFees: Math.round(combinedAiTrainingLicenseFees),
+    totalAiTrainingCosts: Math.round(totalAiTrainingCosts),
+    totalAiTechCosts: Math.round(totalAiTechCosts),
+    totalAiCosts: Math.round(totalAiCosts),
+    firstYearNetValue: Math.round(firstYearNetValue),
+    roi: Math.round(roi * 100) / 100
+  };
+}
+
+// Insights generation
+export function generateIndividualInsights(inputs: IndividualCalculatorInputs, results: IndividualCalculatorResults): Insight[] {
   const insights: Insight[] = [];
   
-  if (results.roi > 200) {
+  if (results.roi > 1000) {
     insights.push({
       type: 'success',
-      message: 'Excellent potential: Your configuration shows strong efficiency gains'
+      message: 'Excellent ROI: Your investment shows exceptional returns'
+    });
+  } else if (results.roi > 500) {
+    insights.push({
+      type: 'info',
+      message: 'Strong ROI: Good returns expected from AI training'
     });
   } else if (results.roi > 100) {
     insights.push({
       type: 'info',
-      message: 'Good potential: Solid returns expected from AI implementation'
+      message: 'Positive ROI: Training investment will pay off'
     });
   } else {
     insights.push({
       type: 'warning',
-      message: 'Consider optimizing: Review parameters to improve ROI'
+      message: 'Consider optimizing: Review training costs or productivity expectations'
     });
   }
   
-  if (results.paybackPeriod < 12) {
-    insights.push({
-      type: 'success',
-      message: 'Quick ROI: Payback period is under 12 months'
-    });
-  } else if (results.paybackPeriod < 24) {
-    insights.push({
-      type: 'info',
-      message: 'Moderate timeline: Payback expected within 2 years'
-    });
-  } else {
+  if (inputs.estProductivityLift > 25) {
     insights.push({
       type: 'warning',
-      message: 'Long payback: Consider reducing implementation costs'
+      message: 'High expectations: Ensure productivity lift assumptions are realistic'
+    });
+  } else if (inputs.estProductivityLift < 10) {
+    insights.push({
+      type: 'info',
+      message: 'Conservative estimate: Consider if productivity gains could be higher'
     });
   }
   
-  if (inputs.modelComplexity === 'advanced' && inputs.trainingDataSize > 1000) {
-    insights.push({
-      type: 'success',
-      message: 'Recommendation: High-quality data with advanced models yield optimal results'
-    });
-  } else if (inputs.trainingDataSize < 100) {
+  if (inputs.aiTrainingHours < 10) {
     insights.push({
       type: 'warning',
-      message: 'Data concern: Consider increasing training data size for better accuracy'
+      message: 'Limited training: Consider increasing training hours for better results'
     });
-  } else {
+  } else if (inputs.aiTrainingHours > 40) {
     insights.push({
       type: 'info',
-      message: 'Data quality: Ensure high-quality training data for optimal results'
+      message: 'Comprehensive training: Extensive training should yield good results'
     });
   }
   
   return insights;
 }
 
-export function exportResults(inputs: CalculatorInputs, results: CalculationResults): void {
+export function generateTeamInsights(inputs: TeamCalculatorInputs, results: TeamCalculatorResults): Insight[] {
+  const insights: Insight[] = [];
+  
+  if (results.roi > 2000) {
+    insights.push({
+      type: 'success',
+      message: 'Exceptional team ROI: Outstanding returns on team training investment'
+    });
+  } else if (results.roi > 1000) {
+    insights.push({
+      type: 'success',
+      message: 'Strong team ROI: Excellent returns expected from team training'
+    });
+  } else if (results.roi > 500) {
+    insights.push({
+      type: 'info',
+      message: 'Good team ROI: Positive returns on team investment'
+    });
+  } else {
+    insights.push({
+      type: 'warning',
+      message: 'Review team parameters: Consider optimizing costs or expectations'
+    });
+  }
+  
+  if (inputs.numberOfLearners > 50) {
+    insights.push({
+      type: 'info',
+      message: 'Large team: Economies of scale should reduce per-person costs'
+    });
+  } else if (inputs.numberOfLearners < 5) {
+    insights.push({
+      type: 'warning',
+      message: 'Small team: Consider if individual training might be more cost-effective'
+    });
+  }
+  
+  const avgCostPerLearner = results.totalAiCosts / inputs.numberOfLearners;
+  if (avgCostPerLearner > 2000) {
+    insights.push({
+      type: 'warning',
+      message: 'High per-learner cost: Review training expenses and efficiency'
+    });
+  } else if (avgCostPerLearner < 500) {
+    insights.push({
+      type: 'success',
+      message: 'Cost-effective training: Good value per learner achieved'
+    });
+  }
+  
+  return insights;
+}
+
+// Export functions
+export function exportIndividualResults(inputs: IndividualCalculatorInputs, results: IndividualCalculatorResults): void {
   const exportData = {
     timestamp: new Date().toISOString(),
+    type: 'individual',
     inputs,
     results,
-    insights: generateInsights(inputs, results)
+    insights: generateIndividualInsights(inputs, results)
   };
   
   const dataStr = JSON.stringify(exportData, null, 2);
@@ -146,6 +200,24 @@ export function exportResults(inputs: CalculatorInputs, results: CalculationResu
   
   const link = document.createElement('a');
   link.href = URL.createObjectURL(dataBlob);
-  link.download = `ai-efficiency-calculation-${new Date().getTime()}.json`;
+  link.download = `ai-value-individual-${new Date().getTime()}.json`;
+  link.click();
+}
+
+export function exportTeamResults(inputs: TeamCalculatorInputs, results: TeamCalculatorResults): void {
+  const exportData = {
+    timestamp: new Date().toISOString(),
+    type: 'team',
+    inputs,
+    results,
+    insights: generateTeamInsights(inputs, results)
+  };
+  
+  const dataStr = JSON.stringify(exportData, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(dataBlob);
+  link.download = `ai-value-team-${new Date().getTime()}.json`;
   link.click();
 }

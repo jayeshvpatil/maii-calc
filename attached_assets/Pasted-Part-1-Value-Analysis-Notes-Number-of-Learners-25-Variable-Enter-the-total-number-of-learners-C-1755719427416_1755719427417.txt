@@ -1,0 +1,29 @@
+Part 1: Value Analysis		Notes
+Number of Learners	25	(Variable) Enter the total number of learners.
+Combined Comp	$2,500,000	(Variable) Enter total annual comp (salary + payroll taxes + benefits). Use base salary if total comp is unknown.
+Average Work Hours	2,080	(Variable) Standard work year based on 40 hr/week. Adjust as needed.
+Combined Work Hours	52,000	(Calcuated) Average work hours x number of learners.
+Blended Cost Per Hour	$48	(Calculated) Combined comp / combined work hours
+Value of Work Multiple	2.0	(Variable) Varies by profession and role. A conservative multiple would be 1.5 - 2.0x. 
+Blended Value of Work / Hour	$96	(Calculated) Blended per hour x value of work multiple.
+Avg. Annual Value of Work	$200,000	(Calculated) Work hours x value of work / hour.
+Est. Productivity Lift (%)	20%	(Variable) Explore different assumptions use a conservative (e.g. 10%), likely (e.g. 20%), best model (e.g. 30%).
+Avg. Value of Productivity Lift	$40,000	(Calculated) Annual value of work x est. productivity lift %.
+Avg. New Annual Value of Work	$240,000	(Calculated) Annual value of work + value of productivity lift.
+TOTAL VALUE OF PRODUCTIVITY LIFT	$1,000,000	(Calculated) Avg. value of productivity lift x number of learners.
+		
+Part 2: Cost Analysis		Notes
+AI Training Hours Per Learner	15	(Variable) Est. number of AI training hours for the year per learner.
+Combined AI Training Hours	375	(Calculated) Number of learners x AI training hours per learner.
+Combined AI Training Human Costs	$18,029	(Calculated) Cost of training hours x cost per hour.
+AI Training License / Fees Per Learner	$300	(Variable) Cost of AI training license and related fees (such as guest speakers, workshops, etc).
+Combined AI Training License / Fees	$7,500	(Calculated) Cost of AI training license / fees per learner x number of learners.
+Total AI Training Costs	$25,529	(Calculated) AI training human costs + AI training license / fees.
+AI Tech Costs Per Learner	$300	(Variable) Enter related tech costs such as ChatGPT or Gemini annual license fees. 
+Total AI Tech Costs	$7,500	(Calculated) AI tech costs per learner x number of learners.
+TOTAL AI COSTS	$33,029	(Calculated) Total AI costs per learner x number of learners.
+		
+Part 3: Net Value Estimate		Notes
+FIRST-YEAR NET VALUE	$966,971	(Calculated) Value of productivity lift - total AI costs. 
+ROI	29.28	
+	2928%	

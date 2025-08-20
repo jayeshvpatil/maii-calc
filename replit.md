@@ -1,6 +1,6 @@
 # Overview
 
-This is a full-stack TypeScript application built with React, Express, and PostgreSQL. The application serves as an AI efficiency calculator that helps users evaluate the potential impact of AI implementation on their business processes. It features a modern, component-based frontend using shadcn/ui components and a RESTful API backend with database integration through Drizzle ORM.
+This is a full-stack TypeScript application built with React, Express, and PostgreSQL. The application serves as an AI Value Calculator that helps users calculate the business value and ROI of AI training for both individuals and teams. It features a modern, tabbed interface with separate calculators for individual and team scenarios, built using shadcn/ui components and following the exact calculation logic from provided Excel specifications.
 
 # User Preferences
 
@@ -38,12 +38,25 @@ Preferred communication style: Simple, everyday language.
 - **Accessibility**: ARIA-compliant components via Radix UI
 
 ## Application Features
-- **Calculator Interface**: Multi-section form for AI efficiency calculations
-- **Real-time Calculations**: Client-side computation of efficiency metrics
-- **Progress Tracking**: Visual feedback during calculation processes
-- **Results Visualization**: Structured display of ROI and efficiency metrics
-- **Export Functionality**: Data export capabilities for results
-- **Responsive Design**: Mobile-first approach with breakpoint-based layouts
+- **Dual Calculator Interface**: Separate tabs for Individual and Team AI value calculations
+- **Excel-based Calculations**: Exact implementation of provided Excel formulas for accuracy
+- **Three-part Analysis Structure**: Value Analysis, Cost Analysis, and Net Value Estimate sections
+- **Real-time Results**: Immediate calculation and display of business metrics
+- **Comprehensive Insights**: Context-aware recommendations based on input parameters
+- **Export Functionality**: JSON export capabilities for both individual and team results
+- **Responsive Design**: Mobile-first approach with professional business styling
+
+## Calculator Structure
+
+### Individual Calculator
+- **Part 1 - Value Analysis**: Annual compensation, work hours, value multiplier, productivity lift
+- **Part 2 - Cost Analysis**: Training hours, license fees, tech costs
+- **Part 3 - Net Value**: First-year net value and ROI calculations
+
+### Team Calculator
+- **Part 1 - Value Analysis**: Number of learners, combined compensation, productivity metrics
+- **Part 2 - Cost Analysis**: Per-learner training costs and combined totals
+- **Part 3 - Net Value**: Team-wide productivity lift value and ROI
 
 # External Dependencies
 
