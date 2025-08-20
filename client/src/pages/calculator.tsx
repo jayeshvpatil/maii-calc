@@ -17,7 +17,8 @@ import {
   Insight 
 } from "@/lib/calculations";
 import { IndividualCalculatorInputs, IndividualCalculatorResults, TeamCalculatorInputs, TeamCalculatorResults } from "@shared/schema";
-import { Calculator, TrendingUp, User, Users } from "lucide-react";
+import { Calculator, User, Users } from "lucide-react";
+import logoUrl from "@assets/image_1755721475254.png";
 
 export default function CalculatorPage() {
   const { toast } = useToast();
@@ -195,14 +196,16 @@ export default function CalculatorPage() {
       {/* Header */}
       <header className="bg-white shadow-sm border-b border-calculator-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center space-x-3">
-              <div className="bg-primary rounded-lg p-2">
-                <TrendingUp className="text-white h-5 w-5" />
-              </div>
+          <div className="flex items-center justify-between py-4">
+            <div className="flex items-center space-x-4">
+              <img 
+                src={logoUrl} 
+                alt="SmarterX Logo" 
+                className="h-12 w-auto"
+              />
               <div>
                 <h1 className="text-xl font-bold text-calculator-gray-900">AI Value Calculator</h1>
-                <p className="text-sm text-calculator-gray-600">Calculate the business value of AI training for individuals and teams</p>
+                <p className="text-sm text-calculator-gray-600">AI Value Calculator: An Interactive Tool to Estimate Efficiency and Productivity Lift from AI.</p>
               </div>
             </div>
           </div>
