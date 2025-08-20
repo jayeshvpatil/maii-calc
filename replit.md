@@ -43,7 +43,7 @@ Preferred communication style: Simple, everyday language.
 - **Three-part Analysis Structure**: Value Analysis, Cost Analysis, and Net Value Estimate sections
 - **Real-time Results**: Immediate calculation and display of business metrics
 - **Comprehensive Insights**: Context-aware recommendations based on input parameters
-- **Export Functionality**: JSON export capabilities for both individual and team results
+
 - **Responsive Design**: Mobile-first approach with professional business styling
 
 ## Calculator Structure

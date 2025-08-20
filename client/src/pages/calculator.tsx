@@ -13,13 +13,11 @@ import {
   calculateIndividualValue, 
   calculateTeamValue, 
   generateIndividualInsights, 
-  generateTeamInsights, 
-  exportIndividualResults, 
-  exportTeamResults, 
+  generateTeamInsights,
   Insight 
 } from "@/lib/calculations";
 import { IndividualCalculatorInputs, IndividualCalculatorResults, TeamCalculatorInputs, TeamCalculatorResults } from "@shared/schema";
-import { Calculator, Download, TrendingUp, User, Users } from "lucide-react";
+import { Calculator, TrendingUp, User, Users } from "lucide-react";
 
 export default function CalculatorPage() {
   const { toast } = useToast();
@@ -190,57 +188,7 @@ export default function CalculatorPage() {
     }
   };
 
-  const handleExport = () => {
-    if (activeTab === "individual") {
-      const inputs = validateIndividualInputs();
-      if (!inputs || !individualResults) {
-        toast({
-          title: "Export Error",
-          description: "Please calculate results before exporting.",
-          variant: "destructive"
-        });
-        return;
-      }
 
-      try {
-        exportIndividualResults(inputs, individualResults);
-        toast({
-          title: "Export Successful",
-          description: "Individual results have been exported successfully.",
-        });
-      } catch (error) {
-        toast({
-          title: "Export Error",
-          description: "An error occurred during export. Please try again.",
-          variant: "destructive"
-        });
-      }
-    } else {
-      const inputs = validateTeamInputs();
-      if (!inputs || !teamResults) {
-        toast({
-          title: "Export Error",
-          description: "Please calculate results before exporting.",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      try {
-        exportTeamResults(inputs, teamResults);
-        toast({
-          title: "Export Successful",
-          description: "Team results have been exported successfully.",
-        });
-      } catch (error) {
-        toast({
-          title: "Export Error",
-          description: "An error occurred during export. Please try again.",
-          variant: "destructive"
-        });
-      }
-    }
-  };
 
   return (
     <div className="min-h-screen bg-calculator-gray-50">
@@ -257,14 +205,6 @@ export default function CalculatorPage() {
                 <p className="text-sm text-calculator-gray-600">Calculate the business value of AI training for individuals and teams</p>
               </div>
             </div>
-            <Button 
-              onClick={handleExport}
-              className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200"
-              data-testid="button-export"
-            >
-              <Download className="mr-2 h-4 w-4" />
-              Export Results
-            </Button>
           </div>
         </div>
       </header>

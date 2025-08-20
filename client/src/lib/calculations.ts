@@ -185,39 +185,4 @@ export function generateTeamInsights(inputs: TeamCalculatorInputs, results: Team
   return insights;
 }
 
-// Export functions
-export function exportIndividualResults(inputs: IndividualCalculatorInputs, results: IndividualCalculatorResults): void {
-  const exportData = {
-    timestamp: new Date().toISOString(),
-    type: 'individual',
-    inputs,
-    results,
-    insights: generateIndividualInsights(inputs, results)
-  };
-  
-  const dataStr = JSON.stringify(exportData, null, 2);
-  const dataBlob = new Blob([dataStr], { type: 'application/json' });
-  
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(dataBlob);
-  link.download = `ai-value-individual-${new Date().getTime()}.json`;
-  link.click();
-}
 
-export function exportTeamResults(inputs: TeamCalculatorInputs, results: TeamCalculatorResults): void {
-  const exportData = {
-    timestamp: new Date().toISOString(),
-    type: 'team',
-    inputs,
-    results,
-    insights: generateTeamInsights(inputs, results)
-  };
-  
-  const dataStr = JSON.stringify(exportData, null, 2);
-  const dataBlob = new Blob([dataStr], { type: 'application/json' });
-  
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(dataBlob);
-  link.download = `ai-value-team-${new Date().getTime()}.json`;
-  link.click();
-}
