@@ -226,9 +226,9 @@ export default function CalculatorPage() {
           </TabsList>
 
           <TabsContent value="individual">
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div className="space-y-8">
               {/* Individual Input Sections */}
-              <div className="xl:col-span-2 space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <IndividualValueAnalysis 
                   values={{
                     comp: individualFormData.comp,
@@ -247,23 +247,23 @@ export default function CalculatorPage() {
                   }}
                   onChange={handleIndividualInputChange}
                 />
+              </div>
 
-                {/* Calculate Button */}
-                <div className="text-center">
-                  <Button
-                    onClick={handleIndividualCalculate}
-                    disabled={isCalculating}
-                    className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                    data-testid="button-calculate-individual"
-                  >
-                    <Calculator className="mr-3 h-5 w-5" />
-                    {isCalculating ? 'Calculating...' : 'Calculate Individual Value'}
-                  </Button>
-                </div>
+              {/* Calculate Button */}
+              <div className="text-center">
+                <Button
+                  onClick={handleIndividualCalculate}
+                  disabled={isCalculating}
+                  className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  data-testid="button-calculate-individual"
+                >
+                  <Calculator className="mr-3 h-5 w-5" />
+                  {isCalculating ? 'Calculating...' : 'Calculate Individual Value'}
+                </Button>
               </div>
 
               {/* Individual Results Panel */}
-              <div className="xl:col-span-1 space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <IndividualResults results={individualResults} />
                 <InsightsPanel insights={insights} />
               </div>
@@ -271,9 +271,9 @@ export default function CalculatorPage() {
           </TabsContent>
 
           <TabsContent value="team">
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div className="space-y-8">
               {/* Team Input Sections */}
-              <div className="xl:col-span-2 space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <TeamValueAnalysis 
                   values={{
                     numberOfLearners: teamFormData.numberOfLearners,
@@ -293,23 +293,23 @@ export default function CalculatorPage() {
                   }}
                   onChange={handleTeamInputChange}
                 />
+              </div>
 
-                {/* Calculate Button */}
-                <div className="text-center">
-                  <Button
-                    onClick={handleTeamCalculate}
-                    disabled={isCalculating}
-                    className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                    data-testid="button-calculate-team"
-                  >
-                    <Calculator className="mr-3 h-5 w-5" />
-                    {isCalculating ? 'Calculating...' : 'Calculate Team Value'}
-                  </Button>
-                </div>
+              {/* Calculate Button */}
+              <div className="text-center">
+                <Button
+                  onClick={handleTeamCalculate}
+                  disabled={isCalculating}
+                  className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  data-testid="button-calculate-team"
+                >
+                  <Calculator className="mr-3 h-5 w-5" />
+                  {isCalculating ? 'Calculating...' : 'Calculate Team Value'}
+                </Button>
               </div>
 
               {/* Team Results Panel */}
-              <div className="xl:col-span-1 space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <TeamResults results={teamResults} />
                 <InsightsPanel insights={insights} />
               </div>
