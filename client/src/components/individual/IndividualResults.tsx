@@ -4,134 +4,140 @@ import { BarChart3, TrendingUp, DollarSign } from "lucide-react";
 
 interface IndividualResultsProps {
   results: IndividualCalculatorResults | null;
+  section?: 'value' | 'cost' | 'net' | 'all';
 }
 
-export function IndividualResults({ results }: IndividualResultsProps) {
+export function IndividualResults({ results, section = 'all' }: IndividualResultsProps) {
   const formatCurrency = (value: number) => `$${value.toLocaleString()}`;
   const formatPercentage = (value: number) => `${value.toFixed(2)}%`;
 
   if (!results) {
+    let title = "Results Summary";
+    if (section === 'value') title = "Value Analysis Results";
+    else if (section === 'cost') title = "Cost Analysis Results";
+    else if (section === 'net') title = "Net Value Results";
+    
     return (
-      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
+      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 h-full">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-calculator-gray-900 flex items-center">
-            <BarChart3 className="text-primary mr-3 h-5 w-5" />
-            Results Summary
+          <CardTitle className="text-md font-semibold text-calculator-gray-900 flex items-center">
+            <BarChart3 className="text-primary mr-3 h-4 w-4" />
+            {title}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-calculator-gray-600">Enter your information to see calculated results</p>
+          <p className="text-calculator-gray-600 text-sm">Enter your information to see calculated results</p>
         </CardContent>
       </Card>
     );
   }
 
-  return (
-    <div className="space-y-6">
-      {/* Part 1 Results */}
-      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
+  // Value Analysis Section
+  if (section === 'value') {
+    return (
+      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 h-full">
         <CardHeader>
           <CardTitle className="text-md font-semibold text-calculator-gray-900 flex items-center">
             <TrendingUp className="text-success-600 mr-3 h-4 w-4" />
             Part 1: Value Analysis Results
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="bg-calculator-gray-50 rounded-lg p-4">
-              <p className="text-xs text-calculator-gray-600 mb-1">Cost Per Hour</p>
-              <p className="text-lg font-semibold text-calculator-gray-900" data-testid="result-costPerHour">
-                {formatCurrency(results.costPerHour)}
-              </p>
-            </div>
-            <div className="bg-calculator-gray-50 rounded-lg p-4">
-              <p className="text-xs text-calculator-gray-600 mb-1">Value of Work / Hour</p>
-              <p className="text-lg font-semibold text-calculator-gray-900" data-testid="result-valueOfWorkPerHour">
-                {formatCurrency(results.valueOfWorkPerHour)}
-              </p>
-            </div>
-            <div className="bg-calculator-gray-50 rounded-lg p-4">
-              <p className="text-xs text-calculator-gray-600 mb-1">Annual Value of Work</p>
-              <p className="text-lg font-semibold text-calculator-gray-900" data-testid="result-annualValueOfWork">
-                {formatCurrency(results.annualValueOfWork)}
-              </p>
-            </div>
-            <div className="bg-success-50 rounded-lg p-4 border border-success-200">
-              <p className="text-xs text-success-700 mb-1">Value of Productivity Lift</p>
-              <p className="text-lg font-semibold text-success-900" data-testid="result-valueOfProductivityLift">
-                {formatCurrency(results.valueOfProductivityLift)}
-              </p>
-            </div>
-            <div className="bg-calculator-gray-50 rounded-lg p-4">
-              <p className="text-xs text-calculator-gray-600 mb-1">New Annual Value of Work</p>
-              <p className="text-lg font-semibold text-calculator-gray-900" data-testid="result-newAnnualValueOfWork">
-                {formatCurrency(results.newAnnualValueOfWork)}
-              </p>
-            </div>
+        <CardContent className="space-y-3">
+          <div className="text-center space-y-1">
+            <div className="text-calculator-gray-600 text-xs">Cost Per Hour</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.costPerHour)}</div>
+          </div>
+          <div className="text-center space-y-1">
+            <div className="text-calculator-gray-600 text-xs">Value of Work / Hour</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.valueOfWorkPerHour)}</div>
+          </div>
+          <div className="text-center space-y-1">
+            <div className="text-calculator-gray-600 text-xs">Annual Value of Work</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.annualValueOfWork)}</div>
+          </div>
+          <div className="text-center space-y-1 p-2 bg-success-50 rounded">
+            <div className="text-success-700 text-xs">Value of Productivity Lift</div>
+            <div className="font-semibold text-sm text-success-600">{formatCurrency(results.valueOfProductivityLift)}</div>
+          </div>
+          <div className="text-center space-y-1">
+            <div className="text-calculator-gray-600 text-xs">New Annual Value of Work</div>
+            <div className="font-semibold text-sm text-primary">{formatCurrency(results.newAnnualValueOfWork)}</div>
           </div>
         </CardContent>
       </Card>
+    );
+  }
 
-      {/* Part 2 Results */}
-      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
+  // Cost Analysis Section
+  if (section === 'cost') {
+    return (
+      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 h-full">
         <CardHeader>
           <CardTitle className="text-md font-semibold text-calculator-gray-900 flex items-center">
             <DollarSign className="text-warning-600 mr-3 h-4 w-4" />
             Part 2: Cost Analysis Results
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-calculator-gray-50 rounded-lg p-4">
-              <p className="text-xs text-calculator-gray-600 mb-1">AI Training Human Costs</p>
-              <p className="text-lg font-semibold text-calculator-gray-900" data-testid="result-aiTrainingHumanCosts">
-                {formatCurrency(results.aiTrainingHumanCosts)}
-              </p>
-            </div>
-            <div className="bg-calculator-gray-50 rounded-lg p-4">
-              <p className="text-xs text-calculator-gray-600 mb-1">Total AI Training Costs</p>
-              <p className="text-lg font-semibold text-calculator-gray-900" data-testid="result-totalAiTrainingCosts">
-                {formatCurrency(results.totalAiTrainingCosts)}
-              </p>
-            </div>
-            <div className="bg-warning-50 rounded-lg p-4 border border-warning-200">
-              <p className="text-xs text-warning-700 mb-1">TOTAL AI COSTS</p>
-              <p className="text-lg font-semibold text-warning-900" data-testid="result-totalAiCosts">
-                {formatCurrency(results.totalAiCosts)}
-              </p>
+        <CardContent className="space-y-3">
+          <div className="text-center space-y-1">
+            <div className="text-calculator-gray-600 text-xs">AI Training Costs</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.aiTrainingCosts)}</div>
+          </div>
+          <div className="text-center space-y-1">
+            <div className="text-calculator-gray-600 text-xs">Total AI Training Costs</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.totalAiTrainingCosts)}</div>
+          </div>
+          <div className="mt-3 p-3 bg-warning-50 rounded-lg text-center">
+            <div className="text-warning-800 font-semibold text-sm">
+              TOTAL AI COSTS: {formatCurrency(results.totalAiTrainingCosts)}
             </div>
           </div>
         </CardContent>
       </Card>
+    );
+  }
 
-      {/* Part 3 Results */}
-      <Card className="bg-gradient-to-r from-primary/5 to-indigo-50 rounded-xl shadow-sm border border-primary/20">
+  // Net Value Section
+  if (section === 'net') {
+    return (
+      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
         <CardHeader>
           <CardTitle className="text-md font-semibold text-calculator-gray-900 flex items-center">
             <BarChart3 className="text-primary mr-3 h-4 w-4" />
             Part 3: Net Value Estimate
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="text-center">
-              <p className="text-sm text-calculator-gray-600 mb-2">FIRST-YEAR NET VALUE</p>
-              <p className="text-3xl font-bold text-primary" data-testid="result-firstYearNetValue">
-                {formatCurrency(results.firstYearNetValue)}
-              </p>
+        <CardContent>
+          <div className="text-center space-y-4">
+            <div className="space-y-2">
+              <div className="text-calculator-gray-600 text-sm">FIRST-YEAR NET VALUE</div>
+              <div className="font-bold text-3xl text-primary">{formatCurrency(results.firstYearNetValue)}</div>
             </div>
-            <div className="text-center">
-              <p className="text-sm text-calculator-gray-600 mb-2">ROI</p>
-              <div>
-                <p className="text-2xl font-bold text-success-600" data-testid="result-roi">
-                  {results.roi.toFixed(2)}
-                </p>
-                <p className="text-3xl font-bold text-success-700" data-testid="result-roiPercentage">
-                  {formatPercentage(results.roi)}
-                </p>
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-calculator-gray-200">
+              <div className="text-center">
+                <div className="text-calculator-gray-600 text-sm">ROI</div>
+                <div className="font-semibold text-xl text-success-600">{results.roi.toFixed(2)}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-calculator-gray-600 text-sm">ROI %</div>
+                <div className="font-semibold text-xl text-success-600">{formatPercentage(results.roiPercentage)}</div>
               </div>
             </div>
           </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // All sections (fallback - shouldn't be used in new layout)
+  return (
+    <div className="space-y-6">
+      <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
+        <CardHeader>
+          <CardTitle className="text-md font-semibold text-calculator-gray-900">All Results</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-calculator-gray-600">Complete results view</p>
         </CardContent>
       </Card>
     </div>
