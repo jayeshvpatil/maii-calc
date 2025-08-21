@@ -227,42 +227,31 @@ export default function CalculatorPage() {
 
           <TabsContent value="individual">
             <div className="space-y-8">
-              {/* Forms and Results Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                {/* Value Analysis Form */}
-                <div className="lg:col-span-1">
-                  <IndividualValueAnalysis 
-                    values={{
-                      comp: individualFormData.comp,
-                      workHours: individualFormData.workHours,
-                      valueOfWorkMultiple: individualFormData.valueOfWorkMultiple,
-                      estProductivityLift: individualFormData.estProductivityLift
-                    }}
-                    onChange={handleIndividualInputChange}
-                  />
-                </div>
+              {/* Row 1: Value Analysis Form and Results */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <IndividualValueAnalysis 
+                  values={{
+                    comp: individualFormData.comp,
+                    workHours: individualFormData.workHours,
+                    valueOfWorkMultiple: individualFormData.valueOfWorkMultiple,
+                    estProductivityLift: individualFormData.estProductivityLift
+                  }}
+                  onChange={handleIndividualInputChange}
+                />
+                <IndividualResults results={individualResults} section="value" />
+              </div>
 
-                {/* Value Analysis Results */}
-                <div className="lg:col-span-1">
-                  <IndividualResults results={individualResults} section="value" />
-                </div>
-
-                {/* Cost Analysis Form */}
-                <div className="lg:col-span-1">
-                  <IndividualCostAnalysis 
-                    values={{
-                      aiTrainingHours: individualFormData.aiTrainingHours,
-                      aiTrainingLicenseFees: individualFormData.aiTrainingLicenseFees,
-                      aiTechCosts: individualFormData.aiTechCosts
-                    }}
-                    onChange={handleIndividualInputChange}
-                  />
-                </div>
-
-                {/* Cost Analysis Results */}
-                <div className="lg:col-span-1">
-                  <IndividualResults results={individualResults} section="cost" />
-                </div>
+              {/* Row 2: Cost Analysis Form and Results */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <IndividualCostAnalysis 
+                  values={{
+                    aiTrainingHours: individualFormData.aiTrainingHours,
+                    aiTrainingLicenseFees: individualFormData.aiTrainingLicenseFees,
+                    aiTechCosts: individualFormData.aiTechCosts
+                  }}
+                  onChange={handleIndividualInputChange}
+                />
+                <IndividualResults results={individualResults} section="cost" />
               </div>
 
               {/* Calculate Button */}
@@ -278,7 +267,7 @@ export default function CalculatorPage() {
                 </Button>
               </div>
 
-              {/* Net Value and Insights Row */}
+              {/* Row 3: Net Value Estimate and Key Insights */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <IndividualResults results={individualResults} section="net" />
                 <InsightsPanel insights={insights} />
@@ -288,43 +277,32 @@ export default function CalculatorPage() {
 
           <TabsContent value="team">
             <div className="space-y-8">
-              {/* Forms and Results Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                {/* Value Analysis Form */}
-                <div className="lg:col-span-1">
-                  <TeamValueAnalysis 
-                    values={{
-                      numberOfLearners: teamFormData.numberOfLearners,
-                      combinedComp: teamFormData.combinedComp,
-                      averageWorkHours: teamFormData.averageWorkHours,
-                      valueOfWorkMultiple: teamFormData.valueOfWorkMultiple,
-                      estProductivityLift: teamFormData.estProductivityLift
-                    }}
-                    onChange={handleTeamInputChange}
-                  />
-                </div>
+              {/* Row 1: Value Analysis Form and Results */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <TeamValueAnalysis 
+                  values={{
+                    numberOfLearners: teamFormData.numberOfLearners,
+                    combinedComp: teamFormData.combinedComp,
+                    averageWorkHours: teamFormData.averageWorkHours,
+                    valueOfWorkMultiple: teamFormData.valueOfWorkMultiple,
+                    estProductivityLift: teamFormData.estProductivityLift
+                  }}
+                  onChange={handleTeamInputChange}
+                />
+                <TeamResults results={teamResults} section="value" />
+              </div>
 
-                {/* Value Analysis Results */}
-                <div className="lg:col-span-1">
-                  <TeamResults results={teamResults} section="value" />
-                </div>
-
-                {/* Cost Analysis Form */}
-                <div className="lg:col-span-1">
-                  <TeamCostAnalysis 
-                    values={{
-                      aiTrainingHoursPerLearner: teamFormData.aiTrainingHoursPerLearner,
-                      aiTrainingLicenseFeesPerLearner: teamFormData.aiTrainingLicenseFeesPerLearner,
-                      aiTechCostsPerLearner: teamFormData.aiTechCostsPerLearner
-                    }}
-                    onChange={handleTeamInputChange}
-                  />
-                </div>
-
-                {/* Cost Analysis Results */}
-                <div className="lg:col-span-1">
-                  <TeamResults results={teamResults} section="cost" />
-                </div>
+              {/* Row 2: Cost Analysis Form and Results */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <TeamCostAnalysis 
+                  values={{
+                    aiTrainingHoursPerLearner: teamFormData.aiTrainingHoursPerLearner,
+                    aiTrainingLicenseFeesPerLearner: teamFormData.aiTrainingLicenseFeesPerLearner,
+                    aiTechCostsPerLearner: teamFormData.aiTechCostsPerLearner
+                  }}
+                  onChange={handleTeamInputChange}
+                />
+                <TeamResults results={teamResults} section="cost" />
               </div>
 
               {/* Calculate Button */}
@@ -340,7 +318,7 @@ export default function CalculatorPage() {
                 </Button>
               </div>
 
-              {/* Net Value and Insights Row */}
+              {/* Row 3: Net Value Estimate and Key Insights */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <TeamResults results={teamResults} section="net" />
                 <InsightsPanel insights={insights} />
