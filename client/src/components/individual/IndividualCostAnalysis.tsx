@@ -54,7 +54,7 @@ export function IndividualCostAnalysis({ values, onChange }: IndividualCostAnaly
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Label htmlFor="aiTrainingLicenseFees" className="block text-sm font-medium text-calculator-gray-700">
-                AI Training License/Fees ($)
+                AI Training Fees ($)
               </Label>
               <Tooltip>
                 <TooltipTrigger asChild>
