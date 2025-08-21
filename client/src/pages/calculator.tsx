@@ -17,11 +17,22 @@ import {
   Insight 
 } from "@/lib/calculations";
 import { IndividualCalculatorInputs, IndividualCalculatorResults, TeamCalculatorInputs, TeamCalculatorResults } from "@shared/schema";
-import { Calculator, User, Users } from "lucide-react";
+import { Calculator, User, Users, TrendingUp, DollarSign, Target } from "lucide-react";
 import logoUrl from "@assets/image_1755721475254.png";
 
 export default function CalculatorPage() {
   const { toast } = useToast();
+
+  // Utility function for formatting currency
+  const formatCurrency = (value: number | undefined | null): string => {
+    if (value === undefined || value === null || isNaN(value)) return '$0';
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
   const [activeTab, setActiveTab] = useState("individual");
   
   // Individual Calculator State
@@ -226,8 +237,8 @@ export default function CalculatorPage() {
           </TabsList>
 
           <TabsContent value="individual">
-            <div className="space-y-3">
-              {/* Row 1: Value Analysis Form and Results */}
+            <div className="space-y-4">
+              {/* Row 1: Forms - Value Analysis and Cost Analysis side by side */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <IndividualValueAnalysis 
                   values={{
@@ -238,11 +249,6 @@ export default function CalculatorPage() {
                   }}
                   onChange={handleIndividualInputChange}
                 />
-                <IndividualResults results={individualResults} section="value" />
-              </div>
-
-              {/* Row 2: Cost Analysis Form and Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <IndividualCostAnalysis 
                   values={{
                     aiTrainingHours: individualFormData.aiTrainingHours,
@@ -251,7 +257,6 @@ export default function CalculatorPage() {
                   }}
                   onChange={handleIndividualInputChange}
                 />
-                <IndividualResults results={individualResults} section="cost" />
               </div>
 
               {/* Calculate Button */}
@@ -267,17 +272,106 @@ export default function CalculatorPage() {
                 </Button>
               </div>
 
-              {/* Row 3: Net Value Estimate and Key Insights */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <IndividualResults results={individualResults} section="net" />
-                <InsightsPanel insights={insights} />
-              </div>
+              {/* Row 2: Single comprehensive results box */}
+              {individualResults ? (
+                <div className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Value Analysis Results */}
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-semibold text-calculator-gray-900 flex items-center">
+                        <TrendingUp className="text-success-600 mr-2 h-5 w-5" />
+                        Value Analysis Results
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Cost Per Hour</div>
+                          <div className="font-semibold text-sm">{formatCurrency(individualResults.costPerHour)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Current Value of Work Per Year</div>
+                          <div className="font-semibold text-sm">{formatCurrency(individualResults.currentValueOfWorkPerYear)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Productivity Lift Value Per Year</div>
+                          <div className="font-semibold text-lg text-success-600">{formatCurrency(individualResults.productivityLiftValuePerYear)}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Cost Analysis Results */}
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-semibold text-calculator-gray-900 flex items-center">
+                        <DollarSign className="text-warning-600 mr-2 h-5 w-5" />
+                        Cost Analysis Results
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">AI Training Human Costs</div>
+                          <div className="font-semibold text-sm">{formatCurrency(individualResults.aiTrainingHumanCosts)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">AI Training License Fees</div>
+                          <div className="font-semibold text-sm">{formatCurrency(individualResults.aiTrainingLicenseFees)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">AI Tech Costs</div>
+                          <div className="font-semibold text-sm">{formatCurrency(individualResults.aiTechCosts)}</div>
+                        </div>
+                        <div className="text-center pt-2 border-t border-calculator-gray-200">
+                          <div className="text-calculator-gray-600 text-xs">Total Costs</div>
+                          <div className="font-semibold text-lg text-warning-600">{formatCurrency(individualResults.totalCosts)}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Net Value and Insights */}
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-semibold text-calculator-gray-900 flex items-center">
+                        <Target className="text-primary mr-2 h-5 w-5" />
+                        Net Value & ROI
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">First Year Net Value</div>
+                          <div className={`font-bold text-xl ${(individualResults.firstYearNetValue || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                            {formatCurrency(individualResults.firstYearNetValue)}
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">First Year ROI</div>
+                          <div className={`font-semibold text-lg ${(individualResults.firstYearROI || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                            {individualResults.firstYearROI ? `${(individualResults.firstYearROI * 100).toFixed(0)}%` : '0%'}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Key Insights */}
+                      <div className="mt-4 pt-4 border-t border-calculator-gray-200">
+                        <h4 className="text-sm font-semibold text-calculator-gray-900 mb-2">Key Insights</h4>
+                        <div className="space-y-1">
+                          {insights.slice(0, 3).map((insight, index) => (
+                            <div key={index} className="text-xs text-calculator-gray-600">
+                              • {insight}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 p-6">
+                  <div className="text-center text-calculator-gray-500">
+                    <p>Complete the forms above and click "Calculate Individual Value" to see your results.</p>
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
 
           <TabsContent value="team">
-            <div className="space-y-3">
-              {/* Row 1: Value Analysis Form and Results */}
+            <div className="space-y-4">
+              {/* Row 1: Forms - Value Analysis and Cost Analysis side by side */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <TeamValueAnalysis 
                   values={{
@@ -289,11 +383,6 @@ export default function CalculatorPage() {
                   }}
                   onChange={handleTeamInputChange}
                 />
-                <TeamResults results={teamResults} section="value" />
-              </div>
-
-              {/* Row 2: Cost Analysis Form and Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <TeamCostAnalysis 
                   values={{
                     aiTrainingHoursPerLearner: teamFormData.aiTrainingHoursPerLearner,
@@ -302,7 +391,6 @@ export default function CalculatorPage() {
                   }}
                   onChange={handleTeamInputChange}
                 />
-                <TeamResults results={teamResults} section="cost" />
               </div>
 
               {/* Calculate Button */}
@@ -318,11 +406,104 @@ export default function CalculatorPage() {
                 </Button>
               </div>
 
-              {/* Row 3: Net Value Estimate and Key Insights */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <TeamResults results={teamResults} section="net" />
-                <InsightsPanel insights={insights} />
-              </div>
+              {/* Row 2: Single comprehensive results box */}
+              {teamResults ? (
+                <div className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Value Analysis Results */}
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-semibold text-calculator-gray-900 flex items-center">
+                        <TrendingUp className="text-success-600 mr-2 h-5 w-5" />
+                        Value Analysis Results
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Blended Cost Per Hour</div>
+                          <div className="font-semibold text-sm">{formatCurrency(teamResults.blendedCostPerHour)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Combined Current Value Per Year</div>
+                          <div className="font-semibold text-sm">{formatCurrency(teamResults.combinedCurrentValuePerYear)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Team Productivity Lift Value Per Year</div>
+                          <div className="font-semibold text-lg text-success-600">{formatCurrency(teamResults.teamProductivityLiftValuePerYear)}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Cost Analysis Results */}
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-semibold text-calculator-gray-900 flex items-center">
+                        <DollarSign className="text-warning-600 mr-2 h-5 w-5" />
+                        Cost Analysis Results
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Combined Training Hours</div>
+                          <div className="font-semibold text-sm">{teamResults.combinedAiTrainingHours?.toLocaleString() || 0} hrs</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Combined Human Costs</div>
+                          <div className="font-semibold text-sm">{formatCurrency(teamResults.combinedAiTrainingHumanCosts)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Combined License Fees</div>
+                          <div className="font-semibold text-sm">{formatCurrency(teamResults.combinedAiTrainingLicenseFees)}</div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Combined Tech Costs</div>
+                          <div className="font-semibold text-sm">{formatCurrency(teamResults.combinedAiTechCosts)}</div>
+                        </div>
+                        <div className="text-center pt-2 border-t border-calculator-gray-200">
+                          <div className="text-calculator-gray-600 text-xs">Total Team Costs</div>
+                          <div className="font-semibold text-lg text-warning-600">{formatCurrency(teamResults.totalTeamCosts)}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Net Value and Insights */}
+                    <div className="space-y-3">
+                      <h3 className="text-lg font-semibold text-calculator-gray-900 flex items-center">
+                        <Target className="text-primary mr-2 h-5 w-5" />
+                        Net Value & ROI
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Team First Year Net Value</div>
+                          <div className={`font-bold text-xl ${(teamResults.teamFirstYearNetValue || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                            {formatCurrency(teamResults.teamFirstYearNetValue)}
+                          </div>
+                        </div>
+                        <div className="text-center">
+                          <div className="text-calculator-gray-600 text-xs">Team First Year ROI</div>
+                          <div className={`font-semibold text-lg ${(teamResults.teamFirstYearROI || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                            {teamResults.teamFirstYearROI ? `${(teamResults.teamFirstYearROI * 100).toFixed(0)}%` : '0%'}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Key Insights */}
+                      <div className="mt-4 pt-4 border-t border-calculator-gray-200">
+                        <h4 className="text-sm font-semibold text-calculator-gray-900 mb-2">Key Insights</h4>
+                        <div className="space-y-1">
+                          {insights.slice(0, 3).map((insight, index) => (
+                            <div key={index} className="text-xs text-calculator-gray-600">
+                              • {insight}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 p-6">
+                  <div className="text-center text-calculator-gray-500">
+                    <p>Complete the forms above and click "Calculate Team Value" to see your results.</p>
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
         </Tabs>
