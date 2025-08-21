@@ -2,6 +2,13 @@
 
 This is a full-stack TypeScript application built with React, Express, and PostgreSQL. The application serves as an AI Value Calculator that helps users calculate the business value and ROI of AI training for both individuals and teams. It features a modern, tabbed interface with separate calculators for individual and team scenarios, built using shadcn/ui components and following the exact calculation logic from provided Excel specifications.
 
+## Recent Changes (August 2025)
+- ✅ Optimized layout for laptop screens with compact spacing
+- ✅ Reduced vertical gaps between sections for better screen utilization
+- ✅ All 3 calculation rows now fit on standard laptop screens without scrolling
+- ✅ Maintained exact Excel calculation accuracy with responsive design
+- ✅ Added SmarterX branding with professional business styling
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
