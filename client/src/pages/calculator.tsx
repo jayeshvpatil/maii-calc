@@ -289,11 +289,11 @@ export default function CalculatorPage() {
                         </div>
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">Current Value of Work Per Year</div>
-                          <div className="font-semibold text-sm">{formatCurrency(individualResults.currentValueOfWorkPerYear)}</div>
+                          <div className="font-semibold text-sm">{formatCurrency(individualResults.annualValueOfWork)}</div>
                         </div>
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">Productivity Lift Value Per Year</div>
-                          <div className="font-semibold text-lg text-success-600">{formatCurrency(individualResults.productivityLiftValuePerYear)}</div>
+                          <div className="font-semibold text-lg text-success-600">{formatCurrency(individualResults.valueOfProductivityLift)}</div>
                         </div>
                       </div>
                     </div>
@@ -310,16 +310,12 @@ export default function CalculatorPage() {
                           <div className="font-semibold text-sm">{formatCurrency(individualResults.aiTrainingHumanCosts)}</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-calculator-gray-600 text-xs">AI Training License Fees</div>
-                          <div className="font-semibold text-sm">{formatCurrency(individualResults.aiTrainingLicenseFees)}</div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-calculator-gray-600 text-xs">AI Tech Costs</div>
-                          <div className="font-semibold text-sm">{formatCurrency(individualResults.aiTechCosts)}</div>
+                          <div className="text-calculator-gray-600 text-xs">AI Training Total Costs</div>
+                          <div className="font-semibold text-sm">{formatCurrency(individualResults.totalAiTrainingCosts)}</div>
                         </div>
                         <div className="text-center pt-2 border-t border-calculator-gray-200">
-                          <div className="text-calculator-gray-600 text-xs">Total Costs</div>
-                          <div className="font-semibold text-lg text-warning-600">{formatCurrency(individualResults.totalCosts)}</div>
+                          <div className="text-calculator-gray-600 text-xs">Total AI Costs</div>
+                          <div className="font-semibold text-lg text-warning-600">{formatCurrency(individualResults.totalAiCosts)}</div>
                         </div>
                       </div>
                     </div>
@@ -339,8 +335,8 @@ export default function CalculatorPage() {
                         </div>
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">First Year ROI</div>
-                          <div className={`font-semibold text-lg ${(individualResults.firstYearROI || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
-                            {individualResults.firstYearROI ? `${(individualResults.firstYearROI * 100).toFixed(0)}%` : '0%'}
+                          <div className={`font-semibold text-lg ${(individualResults.roi || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                            {individualResults.roi ? `${individualResults.roi.toFixed(0)}%` : '0%'}
                           </div>
                         </div>
                       </div>
@@ -351,7 +347,7 @@ export default function CalculatorPage() {
                         <div className="space-y-1">
                           {insights.slice(0, 3).map((insight, index) => (
                             <div key={index} className="text-xs text-calculator-gray-600">
-                              • {insight}
+                              • {typeof insight === 'string' ? insight : insight.message}
                             </div>
                           ))}
                         </div>
@@ -422,12 +418,12 @@ export default function CalculatorPage() {
                           <div className="font-semibold text-sm">{formatCurrency(teamResults.blendedCostPerHour)}</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-calculator-gray-600 text-xs">Combined Current Value Per Year</div>
-                          <div className="font-semibold text-sm">{formatCurrency(teamResults.combinedCurrentValuePerYear)}</div>
+                          <div className="text-calculator-gray-600 text-xs">Avg Annual Value Per Person</div>
+                          <div className="font-semibold text-sm">{formatCurrency(teamResults.avgAnnualValueOfWork)}</div>
                         </div>
                         <div className="text-center">
-                          <div className="text-calculator-gray-600 text-xs">Team Productivity Lift Value Per Year</div>
-                          <div className="font-semibold text-lg text-success-600">{formatCurrency(teamResults.teamProductivityLiftValuePerYear)}</div>
+                          <div className="text-calculator-gray-600 text-xs">Total Team Productivity Lift Value</div>
+                          <div className="font-semibold text-lg text-success-600">{formatCurrency(teamResults.totalValueOfProductivityLift)}</div>
                         </div>
                       </div>
                     </div>
@@ -453,11 +449,11 @@ export default function CalculatorPage() {
                         </div>
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">Combined Tech Costs</div>
-                          <div className="font-semibold text-sm">{formatCurrency(teamResults.combinedAiTechCosts)}</div>
+                          <div className="font-semibold text-sm">{formatCurrency(teamResults.totalAiTechCosts)}</div>
                         </div>
                         <div className="text-center pt-2 border-t border-calculator-gray-200">
-                          <div className="text-calculator-gray-600 text-xs">Total Team Costs</div>
-                          <div className="font-semibold text-lg text-warning-600">{formatCurrency(teamResults.totalTeamCosts)}</div>
+                          <div className="text-calculator-gray-600 text-xs">Total AI Costs</div>
+                          <div className="font-semibold text-lg text-warning-600">{formatCurrency(teamResults.totalAiCosts)}</div>
                         </div>
                       </div>
                     </div>
@@ -471,14 +467,14 @@ export default function CalculatorPage() {
                       <div className="space-y-2">
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">Team First Year Net Value</div>
-                          <div className={`font-bold text-xl ${(teamResults.teamFirstYearNetValue || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
-                            {formatCurrency(teamResults.teamFirstYearNetValue)}
+                          <div className={`font-bold text-xl ${(teamResults.firstYearNetValue || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                            {formatCurrency(teamResults.firstYearNetValue)}
                           </div>
                         </div>
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">Team First Year ROI</div>
-                          <div className={`font-semibold text-lg ${(teamResults.teamFirstYearROI || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
-                            {teamResults.teamFirstYearROI ? `${(teamResults.teamFirstYearROI * 100).toFixed(0)}%` : '0%'}
+                          <div className={`font-semibold text-lg ${(teamResults.roi || 0) >= 0 ? 'text-success-600' : 'text-red-600'}`}>
+                            {teamResults.roi ? `${teamResults.roi.toFixed(0)}%` : '0%'}
                           </div>
                         </div>
                       </div>
@@ -489,7 +485,7 @@ export default function CalculatorPage() {
                         <div className="space-y-1">
                           {insights.slice(0, 3).map((insight, index) => (
                             <div key={index} className="text-xs text-calculator-gray-600">
-                              • {insight}
+                              • {typeof insight === 'string' ? insight : insight.message}
                             </div>
                           ))}
                         </div>
