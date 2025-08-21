@@ -42,7 +42,7 @@ export function IndividualResults({ results, section = 'all' }: IndividualResult
             Part 1: Value Analysis Results
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2">
           <div className="text-center space-y-1">
             <div className="text-calculator-gray-600 text-xs">Cost Per Hour</div>
             <div className="font-semibold text-sm">{formatCurrency(results.costPerHour)}</div>
@@ -78,7 +78,7 @@ export function IndividualResults({ results, section = 'all' }: IndividualResult
             Part 2: Cost Analysis Results
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2">
           <div className="text-center space-y-1">
             <div className="text-calculator-gray-600 text-xs">AI Training Human Costs</div>
             <div className="font-semibold text-sm">{formatCurrency(results.aiTrainingHumanCosts)}</div>

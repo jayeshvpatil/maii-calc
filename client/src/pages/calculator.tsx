@@ -212,9 +212,9 @@ export default function CalculatorPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-2 mb-8">
+          <TabsList className="grid w-full grid-cols-2 mb-4">
             <TabsTrigger value="individual" className="flex items-center space-x-2" data-testid="tab-individual">
               <User className="h-4 w-4" />
               <span>Individual</span>
@@ -226,9 +226,9 @@ export default function CalculatorPage() {
           </TabsList>
 
           <TabsContent value="individual">
-            <div className="space-y-8">
+            <div className="space-y-3">
               {/* Row 1: Value Analysis Form and Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <IndividualValueAnalysis 
                   values={{
                     comp: individualFormData.comp,
@@ -242,7 +242,7 @@ export default function CalculatorPage() {
               </div>
 
               {/* Row 2: Cost Analysis Form and Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <IndividualCostAnalysis 
                   values={{
                     aiTrainingHours: individualFormData.aiTrainingHours,
@@ -255,20 +255,20 @@ export default function CalculatorPage() {
               </div>
 
               {/* Calculate Button */}
-              <div className="text-center">
+              <div className="text-center py-1">
                 <Button
                   onClick={handleIndividualCalculate}
                   disabled={isCalculating}
-                  className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   data-testid="button-calculate-individual"
                 >
-                  <Calculator className="mr-3 h-5 w-5" />
+                  <Calculator className="mr-2 h-4 w-4" />
                   {isCalculating ? 'Calculating...' : 'Calculate Individual Value'}
                 </Button>
               </div>
 
               {/* Row 3: Net Value Estimate and Key Insights */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <IndividualResults results={individualResults} section="net" />
                 <InsightsPanel insights={insights} />
               </div>
@@ -276,9 +276,9 @@ export default function CalculatorPage() {
           </TabsContent>
 
           <TabsContent value="team">
-            <div className="space-y-8">
+            <div className="space-y-3">
               {/* Row 1: Value Analysis Form and Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <TeamValueAnalysis 
                   values={{
                     numberOfLearners: teamFormData.numberOfLearners,
@@ -293,7 +293,7 @@ export default function CalculatorPage() {
               </div>
 
               {/* Row 2: Cost Analysis Form and Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <TeamCostAnalysis 
                   values={{
                     aiTrainingHoursPerLearner: teamFormData.aiTrainingHoursPerLearner,
@@ -306,20 +306,20 @@ export default function CalculatorPage() {
               </div>
 
               {/* Calculate Button */}
-              <div className="text-center">
+              <div className="text-center py-1">
                 <Button
                   onClick={handleTeamCalculate}
                   disabled={isCalculating}
-                  className="bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   data-testid="button-calculate-team"
                 >
-                  <Calculator className="mr-3 h-5 w-5" />
+                  <Calculator className="mr-2 h-4 w-4" />
                   {isCalculating ? 'Calculating...' : 'Calculate Team Value'}
                 </Button>
               </div>
 
               {/* Row 3: Net Value Estimate and Key Insights */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <TeamResults results={teamResults} section="net" />
                 <InsightsPanel insights={insights} />
               </div>

@@ -42,7 +42,7 @@ export function TeamResults({ results, section = 'all' }: TeamResultsProps) {
             Part 1: Value Analysis Results
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2">
           <div className="text-center space-y-1">
             <div className="text-calculator-gray-600 text-xs">Blended Cost Per Hour</div>
             <div className="font-semibold text-sm">{formatCurrency(results.blendedCostPerHour)}</div>
@@ -78,7 +78,7 @@ export function TeamResults({ results, section = 'all' }: TeamResultsProps) {
             Part 2: Cost Analysis Results
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-2">
           <div className="text-center space-y-1">
             <div className="text-calculator-gray-600 text-xs">Combined Training Hours</div>
             <div className="font-semibold text-sm">{results.combinedAiTrainingHours?.toLocaleString() || 0} hrs</div>
