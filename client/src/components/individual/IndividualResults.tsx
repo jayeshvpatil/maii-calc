@@ -8,8 +8,8 @@ interface IndividualResultsProps {
 }
 
 export function IndividualResults({ results, section = 'all' }: IndividualResultsProps) {
-  const formatCurrency = (value: number) => `$${value.toLocaleString()}`;
-  const formatPercentage = (value: number) => `${value.toFixed(2)}%`;
+  const formatCurrency = (value: number | undefined) => value ? `$${value.toLocaleString()}` : '$0';
+  const formatPercentage = (value: number | undefined) => value ? `${value.toFixed(2)}%` : '0%';
 
   if (!results) {
     let title = "Results Summary";
@@ -80,16 +80,16 @@ export function IndividualResults({ results, section = 'all' }: IndividualResult
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">AI Training Costs</div>
-            <div className="font-semibold text-sm">{formatCurrency(results.aiTrainingCosts)}</div>
+            <div className="text-calculator-gray-600 text-xs">AI Training Human Costs</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.aiTrainingHumanCosts)}</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">Total AI Training Costs</div>
-            <div className="font-semibold text-sm">{formatCurrency(results.totalAiTrainingCosts)}</div>
+            <div className="text-calculator-gray-600 text-xs">Total AI Costs</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.totalAiCosts)}</div>
           </div>
           <div className="mt-3 p-3 bg-warning-50 rounded-lg text-center">
             <div className="text-warning-800 font-semibold text-sm">
-              TOTAL AI COSTS: {formatCurrency(results.totalAiTrainingCosts)}
+              TOTAL AI COSTS: {formatCurrency(results.totalAiCosts)}
             </div>
           </div>
         </CardContent>
@@ -120,7 +120,7 @@ export function IndividualResults({ results, section = 'all' }: IndividualResult
               </div>
               <div className="text-center">
                 <div className="text-calculator-gray-600 text-sm">ROI %</div>
-                <div className="font-semibold text-xl text-success-600">{formatPercentage(results.roiPercentage)}</div>
+                <div className="font-semibold text-xl text-success-600">{formatPercentage(results.roi * 100)}</div>
               </div>
             </div>
           </div>

@@ -8,8 +8,8 @@ interface TeamResultsProps {
 }
 
 export function TeamResults({ results, section = 'all' }: TeamResultsProps) {
-  const formatCurrency = (value: number) => `$${value.toLocaleString()}`;
-  const formatPercentage = (value: number) => `${value.toFixed(2)}%`;
+  const formatCurrency = (value: number | undefined) => value ? `$${value.toLocaleString()}` : '$0';
+  const formatPercentage = (value: number | undefined) => value ? `${value.toFixed(2)}%` : '0%';
 
   if (!results) {
     let title = "Team Results Summary";
@@ -44,24 +44,24 @@ export function TeamResults({ results, section = 'all' }: TeamResultsProps) {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">Average Cost Per Hour</div>
-            <div className="font-semibold text-sm">{formatCurrency(results.avgCostPerHour)}</div>
+            <div className="text-calculator-gray-600 text-xs">Blended Cost Per Hour</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.blendedCostPerHour)}</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">Average Value Per Hour</div>
-            <div className="font-semibold text-sm">{formatCurrency(results.avgValuePerHour)}</div>
+            <div className="text-calculator-gray-600 text-xs">Blended Value Per Hour</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.blendedValueOfWorkPerHour)}</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">Combined Annual Value</div>
-            <div className="font-semibold text-sm">{formatCurrency(results.combinedAnnualValue)}</div>
+            <div className="text-calculator-gray-600 text-xs">Average Annual Value</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.avgAnnualValueOfWork)}</div>
           </div>
           <div className="text-center space-y-1 p-2 bg-success-50 rounded">
-            <div className="text-success-700 text-xs">Team Productivity Lift Value</div>
-            <div className="font-semibold text-sm text-success-600">{formatCurrency(results.teamProductivityLiftValue)}</div>
+            <div className="text-success-700 text-xs">Total Productivity Lift Value</div>
+            <div className="font-semibold text-sm text-success-600">{formatCurrency(results.totalValueOfProductivityLift)}</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">New Combined Annual Value</div>
-            <div className="font-semibold text-sm text-primary">{formatCurrency(results.newCombinedAnnualValue)}</div>
+            <div className="text-calculator-gray-600 text-xs">Average New Annual Value</div>
+            <div className="font-semibold text-sm text-primary">{formatCurrency(results.avgNewAnnualValueOfWork)}</div>
           </div>
         </CardContent>
       </Card>
@@ -80,20 +80,20 @@ export function TeamResults({ results, section = 'all' }: TeamResultsProps) {
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">Total Training Hours</div>
-            <div className="font-semibold text-sm">{results.totalTrainingHours.toLocaleString()} hrs</div>
+            <div className="text-calculator-gray-600 text-xs">Combined Training Hours</div>
+            <div className="font-semibold text-sm">{results.combinedAiTrainingHours?.toLocaleString() || 0} hrs</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">Total Training Costs</div>
-            <div className="font-semibold text-sm">{formatCurrency(results.totalTrainingCosts)}</div>
+            <div className="text-calculator-gray-600 text-xs">Combined Training Human Costs</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.combinedAiTrainingHumanCosts)}</div>
           </div>
           <div className="text-center space-y-1">
-            <div className="text-calculator-gray-600 text-xs">Combined AI Costs</div>
-            <div className="font-semibold text-sm">{formatCurrency(results.combinedAiCosts)}</div>
+            <div className="text-calculator-gray-600 text-xs">Total AI Costs</div>
+            <div className="font-semibold text-sm">{formatCurrency(results.totalAiCosts)}</div>
           </div>
           <div className="mt-3 p-3 bg-warning-50 rounded-lg text-center">
             <div className="text-warning-800 font-semibold text-sm">
-              TOTAL TEAM AI COSTS: {formatCurrency(results.combinedAiCosts)}
+              TOTAL TEAM AI COSTS: {formatCurrency(results.totalAiCosts)}
             </div>
           </div>
         </CardContent>
@@ -124,7 +124,7 @@ export function TeamResults({ results, section = 'all' }: TeamResultsProps) {
               </div>
               <div className="text-center">
                 <div className="text-calculator-gray-600 text-sm">ROI %</div>
-                <div className="font-semibold text-xl text-success-600">{formatPercentage(results.roiPercentage)}</div>
+                <div className="font-semibold text-xl text-success-600">{formatPercentage(results.roi * 100)}</div>
               </div>
             </div>
           </div>
