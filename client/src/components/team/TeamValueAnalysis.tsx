@@ -13,9 +13,15 @@ interface TeamValueAnalysisProps {
     estProductivityLift: string;
   };
   onChange: (field: string, value: string) => void;
+  calculationType: "efficiency" | "productivity";
 }
 
-export function TeamValueAnalysis({ values, onChange }: TeamValueAnalysisProps) {
+export function TeamValueAnalysis({ values, onChange, calculationType }: TeamValueAnalysisProps) {
+  const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Efficiency Gains (%)";
+  const liftTooltip = calculationType === "productivity" 
+    ? "Conservative: 10%, Likely: 20%, Best case: 30%" 
+    : "Time saved through automation and AI assistance. Conservative: 15%, Likely: 25%, Best case: 40%";
+  
   return (
     <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
       <CardHeader>
@@ -140,7 +146,7 @@ export function TeamValueAnalysis({ values, onChange }: TeamValueAnalysisProps) 
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Label htmlFor="estProductivityLift" className="block text-sm font-medium text-calculator-gray-700">
-                Est. Productivity Lift (%)
+                {liftLabel}
               </Label>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -149,7 +155,7 @@ export function TeamValueAnalysis({ values, onChange }: TeamValueAnalysisProps) 
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Conservative: 10%, Likely: 20%, Best case: 30%</p>
+                  <p>{liftTooltip}</p>
                 </TooltipContent>
               </Tooltip>
             </div>

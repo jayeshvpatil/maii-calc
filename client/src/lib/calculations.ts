@@ -37,6 +37,36 @@ export function calculateIndividualValue(inputs: IndividualCalculatorInputs): In
   };
 }
 
+// Individual Efficiency Calculator Functions
+export function calculateIndividualEfficiency(inputs: IndividualCalculatorInputs): IndividualCalculatorResults {
+  // Part 1: Value Analysis (Efficiency-based)
+  const costPerHour = inputs.comp / inputs.workHours;
+  const estHoursSaved = inputs.workHours * (inputs.estProductivityLift / 100); // Using estProductivityLift as time savings %
+  const valueOfSavings = estHoursSaved * costPerHour;
+  
+  // Part 2: Cost Analysis
+  const aiTrainingHumanCosts = inputs.aiTrainingHours * costPerHour;
+  const totalAiTrainingCosts = aiTrainingHumanCosts + inputs.aiTrainingLicenseFees;
+  const totalAiCosts = totalAiTrainingCosts + inputs.aiTechCosts;
+  
+  // Part 3: Net Value Estimate
+  const firstYearNetValue = valueOfSavings - totalAiCosts;
+  const roi = (firstYearNetValue / totalAiCosts) * 100;
+  
+  return {
+    costPerHour: Math.round(costPerHour),
+    valueOfWorkPerHour: Math.round(costPerHour), // For efficiency, we use cost per hour
+    annualValueOfWork: Math.round(inputs.workHours * costPerHour),
+    valueOfProductivityLift: Math.round(valueOfSavings), // This represents "value of savings"
+    newAnnualValueOfWork: Math.round(inputs.workHours * costPerHour), // Not changed in efficiency model
+    aiTrainingHumanCosts: Math.round(aiTrainingHumanCosts),
+    totalAiTrainingCosts: Math.round(totalAiTrainingCosts),
+    totalAiCosts: Math.round(totalAiCosts),
+    firstYearNetValue: Math.round(firstYearNetValue),
+    roi: Math.round(roi * 100) / 100
+  };
+}
+
 // Team Calculator Functions
 export function calculateTeamValue(inputs: TeamCalculatorInputs): TeamCalculatorResults {
   // Part 1: Value Analysis
@@ -68,6 +98,45 @@ export function calculateTeamValue(inputs: TeamCalculatorInputs): TeamCalculator
     avgValueOfProductivityLift: Math.round(avgValueOfProductivityLift),
     avgNewAnnualValueOfWork: Math.round(avgNewAnnualValueOfWork),
     totalValueOfProductivityLift: Math.round(totalValueOfProductivityLift),
+    combinedAiTrainingHours: Math.round(combinedAiTrainingHours),
+    combinedAiTrainingHumanCosts: Math.round(combinedAiTrainingHumanCosts),
+    combinedAiTrainingLicenseFees: Math.round(combinedAiTrainingLicenseFees),
+    totalAiTrainingCosts: Math.round(totalAiTrainingCosts),
+    totalAiTechCosts: Math.round(totalAiTechCosts),
+    totalAiCosts: Math.round(totalAiCosts),
+    firstYearNetValue: Math.round(firstYearNetValue),
+    roi: Math.round(roi * 100) / 100
+  };
+}
+
+// Team Efficiency Calculator Functions
+export function calculateTeamEfficiency(inputs: TeamCalculatorInputs): TeamCalculatorResults {
+  // Part 1: Value Analysis (Efficiency-based)
+  const combinedWorkHours = inputs.averageWorkHours * inputs.numberOfLearners;
+  const blendedCostPerHour = inputs.combinedComp / combinedWorkHours;
+  const estHoursSaved = combinedWorkHours * (inputs.estProductivityLift / 100); // Using estProductivityLift as time savings %
+  const valueOfSavings = estHoursSaved * blendedCostPerHour;
+  
+  // Part 2: Cost Analysis
+  const combinedAiTrainingHours = inputs.numberOfLearners * inputs.aiTrainingHoursPerLearner;
+  const combinedAiTrainingHumanCosts = combinedAiTrainingHours * blendedCostPerHour;
+  const combinedAiTrainingLicenseFees = inputs.aiTrainingLicenseFeesPerLearner * inputs.numberOfLearners;
+  const totalAiTrainingCosts = combinedAiTrainingHumanCosts + combinedAiTrainingLicenseFees;
+  const totalAiTechCosts = inputs.aiTechCostsPerLearner * inputs.numberOfLearners;
+  const totalAiCosts = totalAiTrainingCosts + totalAiTechCosts;
+  
+  // Part 3: Net Value Estimate
+  const firstYearNetValue = valueOfSavings - totalAiCosts;
+  const roi = (firstYearNetValue / totalAiCosts) * 100;
+  
+  return {
+    combinedWorkHours: Math.round(combinedWorkHours),
+    blendedCostPerHour: Math.round(blendedCostPerHour),
+    blendedValueOfWorkPerHour: Math.round(blendedCostPerHour), // For efficiency, we use cost per hour
+    avgAnnualValueOfWork: Math.round(inputs.combinedComp / inputs.numberOfLearners),
+    avgValueOfProductivityLift: Math.round(valueOfSavings / inputs.numberOfLearners), // Average savings per person
+    avgNewAnnualValueOfWork: Math.round(inputs.combinedComp / inputs.numberOfLearners), // Not changed in efficiency model
+    totalValueOfProductivityLift: Math.round(valueOfSavings), // This represents "value of savings"
     combinedAiTrainingHours: Math.round(combinedAiTrainingHours),
     combinedAiTrainingHumanCosts: Math.round(combinedAiTrainingHumanCosts),
     combinedAiTrainingLicenseFees: Math.round(combinedAiTrainingLicenseFees),
