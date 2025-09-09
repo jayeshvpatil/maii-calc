@@ -33,6 +33,7 @@ import {
   TrendingUp,
   DollarSign,
   Target,
+  Download,
 } from "lucide-react";
 import logoUrl from "@assets/smarterx_logo.png";
 
@@ -48,6 +49,57 @@ export default function CalculatorPage() {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
+  };
+
+  // PDF Export function using browser print
+  const exportToPDF = () => {
+    try {
+      // Add print-specific styles
+      const printStyles = document.createElement('style');
+      printStyles.textContent = `
+        @media print {
+          body { 
+            margin: 0; 
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+          }
+          .no-print { display: none !important; }
+          .print-break { page-break-before: always; }
+          header { break-inside: avoid; }
+          .bg-calculator-gray-50 { background: white !important; }
+          .shadow-sm { box-shadow: none !important; }
+          .border { border: 1px solid #e5e7eb !important; }
+          .bg-white { background: white !important; }
+          .rounded-xl { border-radius: 8px !important; }
+          .text-calculator-gray-900 { color: #111827 !important; }
+          .text-calculator-gray-600 { color: #4b5563 !important; }
+          .text-success-600 { color: #059669 !important; }
+          .text-warning-600 { color: #d97706 !important; }
+          .text-primary { color: #2563eb !important; }
+          .text-red-600 { color: #dc2626 !important; }
+          * { box-shadow: none !important; }
+          .max-w-7xl { max-width: 100% !important; }
+          .px-4, .sm\\:px-6, .lg\\:px-8 { padding-left: 16px !important; padding-right: 16px !important; }
+        }
+      `;
+      document.head.appendChild(printStyles);
+
+      // Open print dialog
+      window.print();
+
+      // Clean up styles after print dialog closes
+      setTimeout(() => {
+        document.head.removeChild(printStyles);
+      }, 1000);
+
+    } catch (error) {
+      console.error('Error opening print dialog:', error);
+      toast({
+        title: "Print Error",
+        description: "Could not open print dialog. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
   const [activeTab, setActiveTab] = useState("individual");
   const [calculationType, setCalculationType] = useState<"efficiency" | "productivity">("productivity");
@@ -397,6 +449,19 @@ export default function CalculatorPage() {
               {/* Row 2: Single comprehensive results box */}
               {individualResults ? (
                 <div className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl font-bold text-calculator-gray-900">
+                      Individual {calculationType === "productivity" ? "Productivity" : "Efficiency"} Analysis Results
+                    </h2>
+                    <Button
+                      onClick={exportToPDF}
+                      variant="outline"
+                      className="flex items-center gap-2 no-print"
+                    >
+                      <Download className="h-4 w-4" />
+                      Export PDF
+                    </Button>
+                  </div>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Value Analysis Results */}
                     <div className="space-y-3">
@@ -606,6 +671,19 @@ export default function CalculatorPage() {
               {/* Row 2: Single comprehensive results box */}
               {teamResults ? (
                 <div className="bg-white rounded-xl shadow-sm border border-calculator-gray-200 p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl font-bold text-calculator-gray-900">
+                      Team {calculationType === "productivity" ? "Productivity" : "Efficiency"} Analysis Results
+                    </h2>
+                    <Button
+                      onClick={exportToPDF}
+                      variant="outline"
+                      className="flex items-center gap-2 no-print"
+                    >
+                      <Download className="h-4 w-4" />
+                      Export PDF
+                    </Button>
+                  </div>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Value Analysis Results */}
                     <div className="space-y-3">
