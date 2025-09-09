@@ -18,6 +18,19 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        // Don't hash filenames for HubSpot compatibility
+        entryFileNames: 'js/[name].js',
+        chunkFileNames: 'js/[name].js',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'css/[name].[ext]';
+          }
+          return 'assets/[name].[ext]';
+        }
+      }
+    }
   },
   server: {
     fs: {

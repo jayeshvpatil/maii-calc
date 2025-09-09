@@ -18,7 +18,7 @@ interface IndividualValueAnalysisProps {
 export function IndividualValueAnalysis({ values, onChange, calculationType }: IndividualValueAnalysisProps) {
   const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Efficiency Gains (%)";
   const liftTooltip = calculationType === "productivity" 
-    ? "Conservative: 10%, Likely: 20%, Best case: 30%" 
+    ? "Explore different assumptions. Conservative: 10%" 
     : "Time saved through automation and AI assistance. Conservative: 15%, Likely: 25%, Best case: 40%";
   
   return (
