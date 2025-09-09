@@ -753,11 +753,11 @@ export default function CalculatorPage() {
                         {calculationType === "productivity" && (
                           <div className="text-center">
                             <div className="text-calculator-gray-600 text-xs">
-                              New Team Annual Value of Work
+                              New Avg. Annual Value of Work
                             </div>
                             <div className="font-semibold text-lg text-primary">
                               {formatCurrency(
-                                (teamResults.avgAnnualValueOfWork || 0) * parseInt(teamFormData.numberOfLearners || "0") + (teamResults.totalValueOfProductivityLift || 0),
+                                (teamResults.avgAnnualValueOfWork || 0)  + (teamResults.avgValueOfProductivityLift || 0),
                               )}
                             </div>
                           </div>
