@@ -17,10 +17,10 @@ interface TeamValueAnalysisProps {
 }
 
 export function TeamValueAnalysis({ values, onChange, calculationType }: TeamValueAnalysisProps) {
-  const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Efficiency Gains (%)";
+  const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Time Savings (%)";
   const liftTooltip = calculationType === "productivity" 
-    ? "Conservative: 10%, Likely: 20%, Best case: 30%" 
-    : "Time saved through automation and AI assistance. Conservative: 15%, Likely: 25%, Best case: 40%";
+    ? "Explore different assumptions. Conservative: 10%" 
+    : "Explore different assumptions. Conservative: 10%";
   
   return (
     <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">

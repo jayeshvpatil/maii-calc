@@ -6,34 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { IndividualValueAnalysis } from "@/components/individual/IndividualValueAnalysis";
 import { IndividualCostAnalysis } from "@/components/individual/IndividualCostAnalysis";
-import { IndividualResults                        <div className="text-center">
-                          <div className="text-calculator-gray-600 text-xs">
-                            {calculationType === "productivity" ? "Avg Annual Value Per Person" : "Avg Annual Cost Per Person"}
-                          </div>
-                          <div className="font-semibold text-sm">
-                            {formatCurrency(teamResults.avgAnnualValueOfWork)}
-                          </div>
-                        </div>
-                        {calculationType === "productivity" && (
-                          <>
-                            <div className="text-center">
-                              <div className="text-calculator-gray-600 text-xs">
-                                Avg. Value of Productivity Lift
-                              </div>
-                              <div className="font-semibold text-sm">
-                                {formatCurrency(teamResults.avgValueOfProductivityLift)}
-                              </div>
-                            </div>
-                            <div className="text-center">
-                              <div className="text-calculator-gray-600 text-xs">
-                                Avg. New Annual Value of Work
-                              </div>
-                              <div className="font-semibold text-sm">
-                                {formatCurrency(teamResults.avgNewAnnualValueOfWork)}
-                              </div>
-                            </div>
-                          </>
-                        )}"@/components/individual/IndividualResults";
+import { IndividualResults } from "@/components/individual/IndividualResults";
 import { TeamValueAnalysis } from "@/components/team/TeamValueAnalysis";
 import { TeamCostAnalysis } from "@/components/team/TeamCostAnalysis";
 import { TeamResults } from "@/components/team/TeamResults";
@@ -337,9 +310,9 @@ export default function CalculatorPage() {
                       </SelectItem>
                       <SelectItem value="efficiency">
                         <div className="flex flex-col">
-                          <span className="font-medium">Efficiency Gains</span>
+                          <span className="font-medium">Efficiency Lift</span>
                           <span className="text-xs text-calculator-gray-500">
-                            Calculate value from time savings and cost reduction
+                            Calculate value from time & cost savings.
                           </span>
                         </div>
                       </SelectItem>
@@ -348,7 +321,7 @@ export default function CalculatorPage() {
                 </div>
                 <div className="bg-calculator-gray-50 rounded-lg p-3 text-sm text-calculator-gray-600">
                   <strong className="text-calculator-gray-800">
-                    {calculationType === "productivity" ? "Productivity Lift:" : "Efficiency Focus:"}
+                    {calculationType === "productivity" ? "Productivity Lift:" : "Efficiency Lift:"}
                   </strong>
                   <br />
                   {calculationType === "productivity" 
@@ -440,6 +413,16 @@ export default function CalculatorPage() {
                             {formatCurrency(individualResults.costPerHour)}
                           </div>
                         </div>
+                        {calculationType === "efficiency" && (
+                          <div className="text-center">
+                            <div className="text-calculator-gray-600 text-xs">
+                              Est. Hours Saved
+                            </div>
+                            <div className="font-semibold text-sm">
+                              {((parseFloat(individualFormData.estProductivityLift) || 0) / 100 * parseFloat(individualFormData.workHours || "0")).toLocaleString()} hrs
+                            </div>
+                          </div>
+                        )}
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">
                             {calculationType === "productivity" ? "Current Annual Value of Work" : "Annual Cost (Comp)"}
@@ -452,7 +435,7 @@ export default function CalculatorPage() {
                         </div>
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">
-                            {calculationType === "productivity" ? "Productivity Lift Annual Value" : "Value of Time Savings Per Year"}
+                            {calculationType === "productivity" ? "Productivity Lift Annual Value" : "Value of Savings"}
                           </div>
                           <div className="font-semibold text-lg text-success-600">
                             {formatCurrency(
@@ -639,17 +622,49 @@ export default function CalculatorPage() {
                             {formatCurrency(teamResults.blendedCostPerHour)}
                           </div>
                         </div>
+                        {calculationType === "efficiency" && (
+                          <div className="text-center">
+                            <div className="text-calculator-gray-600 text-xs">
+                              Est. Hours Saved
+                            </div>
+                            <div className="font-semibold text-sm">
+                              {((parseFloat(teamFormData.estProductivityLift) || 0) / 100 * (teamResults.combinedWorkHours || 0)).toLocaleString()} hrs
+                            </div>
+                          </div>
+                        )}
+                        {calculationType === "productivity" && (
+                          <div className="text-center">
+                            <div className="text-calculator-gray-600 text-xs">
+                              Avg. Annual Value of Work
+                            </div>
+                            <div className="font-semibold text-sm">
+                              {formatCurrency(teamResults.avgAnnualValueOfWork)}
+                            </div>
+                          </div>
+                        )}
+                        {calculationType === "productivity" && (
+                          <>
+                            <div className="text-center">
+                              <div className="text-calculator-gray-600 text-xs">
+                                Avg. Value of Productivity Lift
+                              </div>
+                              <div className="font-semibold text-sm">
+                                {formatCurrency(teamResults.avgValueOfProductivityLift)}
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div className="text-calculator-gray-600 text-xs">
+                                Avg. New Annual Value of Work
+                              </div>
+                              <div className="font-semibold text-sm">
+                                {formatCurrency(teamResults.avgNewAnnualValueOfWork)}
+                              </div>
+                            </div>
+                          </>
+                        )}
                         <div className="text-center">
                           <div className="text-calculator-gray-600 text-xs">
-                            {calculationType === "productivity" ? "Avg. Annual Value of Work" : "Avg Annual Cost Per Person"}
-                          </div>
-                          <div className="font-semibold text-sm">
-                            {formatCurrency(teamResults.avgAnnualValueOfWork)}
-                          </div>
-                        </div>
-                        <div className="text-center">
-                          <div className="text-calculator-gray-600 text-xs">
-                            {calculationType === "productivity" ? "Total Team Productivity Lift Value" : "Total Team Time Savings Value"}
+                            {calculationType === "productivity" ? "Total Annual Productivity Lift Value" : "Total Value of Savings"}
                           </div>
                           <div className="font-semibold text-lg text-success-600">
                             {formatCurrency(

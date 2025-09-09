@@ -16,10 +16,10 @@ interface IndividualValueAnalysisProps {
 }
 
 export function IndividualValueAnalysis({ values, onChange, calculationType }: IndividualValueAnalysisProps) {
-  const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Efficiency Gains (%)";
+  const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Time Savings (%)";
   const liftTooltip = calculationType === "productivity" 
     ? "Explore different assumptions. Conservative: 10%" 
-    : "Time saved through automation and AI assistance. Conservative: 15%, Likely: 25%, Best case: 40%";
+    : "Explore different assumptions. Conservative: 10%";
   
   return (
     <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
