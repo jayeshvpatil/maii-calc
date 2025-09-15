@@ -1,0 +1,1397 @@
+<!-- AI Value Calculator - HubSpot Module (Embedded Version) -->
+<!-- Module: AI Value Calculator -->
+<!-- Author: SmarterX Team -->
+<!-- Version: 3.0 - Full Embedded Calculator -->
+
+<div class="hub_ai_value_calculator_wrapper">
+  <!-- All CSS in head to avoid CSP issues -->
+  <style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    /* CSS Variables for theming */
+    .hub_ai_value_calculator_wrapper {
+      --background: hsl(0 0% 100%);
+      --foreground: hsl(210 25% 7.8431%);
+      --card: hsl(180 6.6667% 97.0588%);
+      --card-foreground: hsl(210 25% 7.8431%);
+      --popover: hsl(0 0% 100%);
+      --popover-foreground: hsl(210 25% 7.8431%);
+      --primary: hsl(213.3 84.4% 53.5%);
+      --primary-dark: hsl(218.5 81.9% 46.7%);
+      --primary-foreground: hsl(0 0% 100%);
+      --secondary: hsl(210 25% 7.8431%);
+      --secondary-foreground: hsl(0 0% 100%);
+      --muted: hsl(240 1.9608% 90%);
+      --muted-foreground: hsl(210 25% 7.8431%);
+      --accent: hsl(211.5789 51.3514% 92.7451%);
+      --accent-foreground: hsl(210 25% 7.8431%);
+      --destructive: hsl(0 84.2% 60.2%);
+      --destructive-foreground: hsl(0 0% 98%);
+      --border: hsl(214.3 31.8% 91.4%);
+      --input: hsl(214.3 31.8% 91.4%);
+      --ring: hsl(213.3 84.4% 53.5%);
+      --radius: 0.5rem;
+      --success-50: hsl(138 76% 97%);
+      --success-100: hsl(138 76% 94%);
+      --success-200: hsl(138 76% 89%);
+      --success-600: hsl(138 76% 42%);
+      --warning-50: hsl(48 100% 96%);
+      --warning-600: hsl(32 95% 44%);
+      --calculator-gray-50: #f9fafb;
+      --calculator-gray-100: #f3f4f6;
+      --calculator-gray-200: #e5e7eb;
+      --calculator-gray-300: #d1d5db;
+      --calculator-gray-400: #9ca3af;
+      --calculator-gray-500: #6b7280;
+      --calculator-gray-600: #4b5563;
+      --calculator-gray-700: #374151;
+      --calculator-gray-800: #1f2937;
+      --calculator-gray-900: #111827;
+    }
+
+    /* Reset and base styles */
+    .hub_ai_value_calculator_wrapper * {
+      box-sizing: border-box;
+    }
+    
+    .hub_ai_value_calculator_wrapper {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--calculator-gray-900);
+      background: var(--calculator-gray-50);
+      min-height: 600px;
+      width: 100%;
+      padding: 20px;
+    }
+
+    /* Header styles */
+    .calc-header {
+      background: var(--background);
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid var(--calculator-gray-200);
+      margin-bottom: 32px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .calc-header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .calc-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .calc-logo-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .calc-logo {
+      height: 48px;
+      width: auto;
+    }
+
+    .calc-title-group h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--calculator-gray-900);
+      margin: 0 0 8px 0;
+    }
+
+    .calc-title-group p {
+      font-size: 16px;
+      color: var(--calculator-gray-600);
+      margin: 0;
+    }
+
+    /* Main container */
+    .calc-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 32px 20px;
+    }
+
+    /* Card styles */
+    .calc-card {
+      background: var(--background);
+      border-radius: 16px;
+      border: 1px solid var(--calculator-gray-200);
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .calc-card-header {
+      padding: 20px 24px 16px 24px;
+      border-bottom: 1px solid var(--calculator-gray-200);
+      background: var(--calculator-gray-50);
+    }
+
+    .calc-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--calculator-gray-900);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .calc-card-content {
+      padding: 24px;
+    }
+
+    /* Form styles */
+    .calc-form-group {
+      margin-bottom: 24px;
+    }
+
+    .calc-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--calculator-gray-700);
+      margin-bottom: 8px;
+    }
+
+    .calc-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--calculator-gray-300);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--calculator-gray-900);
+      background: var(--background);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      box-sizing: border-box;
+    }
+
+    .calc-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .calc-input::placeholder {
+      color: var(--calculator-gray-400);
+    }
+
+    .calc-select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--calculator-gray-300);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--calculator-gray-900);
+      background: var(--background);
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: 40px;
+      appearance: none;
+      box-sizing: border-box;
+    }
+
+    .calc-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    /* Button styles */
+    .calc-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      gap: 8px;
+    }
+
+    .calc-button-primary {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      padding: 12px 24px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .calc-button-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .calc-button-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .calc-button-outline {
+      background: transparent;
+      color: var(--calculator-gray-700);
+      border: 1px solid var(--calculator-gray-300);
+      padding: 8px 16px;
+    }
+
+    .calc-button-outline:hover {
+      background: var(--calculator-gray-50);
+      border-color: var(--calculator-gray-400);
+    }
+
+    /* Grid layouts */
+    .calc-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .calc-grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .calc-grid-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    /* Tabs */
+    .calc-tabs {
+      margin-bottom: 16px;
+    }
+
+    .calc-tab-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--calculator-gray-100);
+      border-radius: 8px;
+      padding: 4px;
+      margin-bottom: 16px;
+    }
+
+    .calc-tab-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border: none;
+      background: transparent;
+      color: var(--calculator-gray-600);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .calc-tab-button.active {
+      background: var(--background);
+      color: var(--calculator-gray-900);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .calc-tab-content {
+      display: none;
+    }
+
+    .calc-tab-content.active {
+      display: block;
+    }
+
+    /* Results display */
+    .calc-results {
+      background: var(--background);
+      border-radius: 12px;
+      border: 1px solid var(--calculator-gray-200);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .calc-results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px;
+      border-bottom: 1px solid var(--calculator-gray-200);
+    }
+
+    .calc-results-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--calculator-gray-900);
+      margin: 0;
+    }
+
+    .calc-results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    .calc-result-section h3 {
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--calculator-gray-900);
+      margin: 0 0 12px 0;
+      gap: 8px;
+    }
+
+    .calc-metric {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .calc-metric-label {
+      color: var(--calculator-gray-600);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .calc-metric-value {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--calculator-gray-900);
+    }
+
+    .calc-metric-value.large {
+      font-size: 18px;
+    }
+
+    .calc-metric-value.success {
+      color: var(--success-600);
+    }
+
+    .calc-metric-value.warning {
+      color: var(--warning-600);
+    }
+
+    .calc-metric-value.primary {
+      color: var(--primary);
+    }
+
+    /* Loading and error states */
+    .calc-loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--calculator-gray-500);
+    }
+
+    .calc-error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      padding: 16px;
+      border-radius: 8px;
+      margin: 16px 0;
+      text-align: center;
+    }
+
+    /* Responsive design */
+    @media (max-width: 1024px) {
+      .calc-grid-2, .calc-grid-3 {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .calc-results-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      
+      .calc-header-inner {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      
+      .calc-main {
+        padding: 0 16px 24px 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hub_ai_value_calculator_wrapper {
+        padding: 16px;
+      }
+      
+      .calc-header {
+        margin-bottom: 24px;
+      }
+      
+      .calc-header-content {
+        padding: 20px 16px;
+      }
+      
+      .calc-title-group h1 {
+        font-size: 24px;
+      }
+      
+      .calc-title-group p {
+        font-size: 14px;
+      }
+      
+      .calc-main {
+        padding: 0 12px 20px 12px;
+      }
+      
+      .calc-card-content {
+        padding: 20px 16px;
+      }
+      
+      .calc-card-header {
+        padding: 16px;
+      }
+      
+      .calc-results-grid {
+        padding: 20px 16px;
+        gap: 20px;
+      }
+      
+      .calc-tab-list {
+        gap: 8px;
+      }
+      
+      .calc-tab-button {
+        padding: 12px 8px;
+        font-size: 13px;
+      }
+      
+      .calc-form-group {
+        margin-bottom: 20px;
+      }
+      
+      .calc-input, .calc-select {
+        padding: 14px 16px;
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+      
+      .calc-button-primary {
+        width: 100%;
+        padding: 16px 24px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hub_ai_value_calculator_wrapper {
+        padding: 12px;
+      }
+      
+      .calc-header-content {
+        padding: 16px 12px;
+      }
+      
+      .calc-title-group h1 {
+        font-size: 20px;
+        line-height: 1.3;
+      }
+      
+      .calc-title-group p {
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      
+      .calc-main {
+        padding: 0 8px 16px 8px;
+      }
+      
+      .calc-card {
+        margin-bottom: 16px;
+        border-radius: 12px;
+      }
+      
+      .calc-card-content {
+        padding: 16px 12px;
+      }
+      
+      .calc-card-header {
+        padding: 12px;
+      }
+      
+      .calc-card-title {
+        font-size: 16px;
+      }
+      
+      .calc-form-group {
+        margin-bottom: 16px;
+      }
+      
+      .calc-label {
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+      
+      .calc-input, .calc-select {
+        padding: 12px 14px;
+        font-size: 16px;
+        border-radius: 6px;
+      }
+      
+      .calc-tab-button {
+        padding: 10px 6px;
+        font-size: 12px;
+        gap: 4px;
+      }
+      
+      .calc-results-header {
+        padding: 16px 12px;
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+      
+      .calc-results-title {
+        font-size: 18px;
+      }
+      
+      .calc-results-grid {
+        padding: 16px 12px;
+        gap: 16px;
+      }
+      
+      .calc-result-section h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+      
+      .calc-metric {
+        margin-bottom: 12px;
+      }
+      
+      .calc-metric-label {
+        font-size: 11px;
+      }
+      
+      .calc-metric-value {
+        font-size: 13px;
+      }
+      
+      .calc-metric-value.large {
+        font-size: 16px;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .calc-button, .no-print {
+        display: none !important;
+      }
+      
+      .hub_ai_value_calculator_wrapper {
+        background: white;
+        color: black;
+      }
+    }
+  </style>
+
+  <!-- Calculator HTML Structure -->
+  <div class="calc-container">
+    <!-- Header -->
+    <header class="calc-header">
+      <div class="calc-header-content">
+        <div class="calc-header-inner">
+          <div class="calc-logo-section">
+            <img src="https://ai-efficiency-pilot-601121193684.us-central1.run.app/assets/smarterx_logo.png" 
+                 alt="SmarterX Logo" 
+                 class="calc-logo"
+                 onerror="this.style.display='none'">
+            <div class="calc-title-group">
+              <h1>{{ widget.ai_calculator_title }}</h1>
+              <p>{{ widget.ai_calculator_subtitle }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="calc-main">
+      <!-- Calculation Type Selection -->
+      <div class="calc-card">
+        <div class="calc-card-header">
+          <h2 class="calc-card-title">Calculation Type</h2>
+        </div>
+        <div class="calc-card-content">
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="flex: 1;">
+              <label for="calculation-type" class="calc-label">What would you like to calculate?</label>
+              <select id="calculation-type" class="calc-select">
+                <option value="productivity">Productivity Lift - Increase Output and Revenue by Doing More</option>
+                <option value="efficiency">Efficiency Lift - Save Time and Money by Doing Work Faster</option>
+              </select>
+            </div>
+            <div style="background: var(--calculator-gray-50); border-radius: 8px; padding: 16px; border-left: 4px solid var(--primary);">
+              <div style="font-weight: 600; color: var(--calculator-gray-800); margin-bottom: 4px;" id="calc-type-title">
+                Productivity Lift:
+              </div>
+              <div style="font-size: 14px; color: var(--calculator-gray-600); line-height: 1.4;" id="calc-type-description">
+                Increase Output and Revenue by Doing More.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analysis Type Tabs -->
+      <div class="calc-tabs">
+        <div class="calc-tab-list">
+          <button class="calc-tab-button active" data-tab="individual">
+            👤 Individual
+          </button>
+          <button class="calc-tab-button" data-tab="team">
+            👥 Team
+          </button>
+        </div>
+
+        <!-- Individual Analysis Tab -->
+        <div class="calc-tab-content active" id="individual-tab">
+          <div class="calc-grid calc-grid-2">
+            <!-- Individual Value Analysis -->
+            <div class="calc-card">
+              <div class="calc-card-header">
+                <h3 class="calc-card-title">👤 Individual Value Analysis</h3>
+              </div>
+              <div class="calc-card-content">
+                <div class="calc-form-group">
+                  <label for="ind-comp" class="calc-label">Annual Compensation ($)</label>
+                  <input type="number" id="ind-comp" class="calc-input" placeholder="e.g., 75000">
+                </div>
+                <div class="calc-form-group">
+                  <label for="ind-work-hours" class="calc-label">Annual Work Hours</label>
+                  <input type="number" id="ind-work-hours" class="calc-input" value="2080">
+                </div>
+                <div class="calc-form-group">
+                  <label for="ind-value-multiple" class="calc-label">Value of Work Multiple</label>
+                  <input type="number" id="ind-value-multiple" class="calc-input" value="2.0" step="0.1">
+                </div>
+                <div class="calc-form-group">
+                  <label for="ind-productivity-lift" class="calc-label">Est. Productivity/Efficiency Lift (%)</label>
+                  <input type="number" id="ind-productivity-lift" class="calc-input" placeholder="e.g., 15" max="100">
+                </div>
+              </div>
+            </div>
+
+            <!-- Individual Cost Analysis -->
+            <div class="calc-card">
+              <div class="calc-card-header">
+                <h3 class="calc-card-title">💰 Individual Cost Analysis</h3>
+              </div>
+              <div class="calc-card-content">
+                <div class="calc-form-group">
+                  <label for="ind-training-hours" class="calc-label">AI Training Hours</label>
+                  <input type="number" id="ind-training-hours" class="calc-input" placeholder="e.g., 40">
+                </div>
+                <div class="calc-form-group">
+                  <label for="ind-license-fees" class="calc-label">AI Training License Fees ($)</label>
+                  <input type="number" id="ind-license-fees" class="calc-input" placeholder="e.g., 500">
+                </div>
+                <div class="calc-form-group">
+                  <label for="ind-tech-costs" class="calc-label">AI Tech Costs ($)</label>
+                  <input type="number" id="ind-tech-costs" class="calc-input" placeholder="e.g., 1000">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin: 24px 0;">
+            <button class="calc-button calc-button-primary" onclick="calculateIndividual()">
+              🧮 Calculate Individual Value
+            </button>
+          </div>
+
+          <!-- Individual Results -->
+          <div id="individual-results" style="display: none;">
+            <!-- Results will be populated by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Team Analysis Tab -->
+        <div class="calc-tab-content" id="team-tab">
+          <div class="calc-grid calc-grid-2">
+            <!-- Team Value Analysis -->
+            <div class="calc-card">
+              <div class="calc-card-header">
+                <h3 class="calc-card-title">Team Value Analysis</h3>
+              </div>
+              <div class="calc-card-content">
+                <div class="calc-form-group">
+                  <label for="team-learners" class="calc-label">Number of Learners</label>
+                  <input type="number" id="team-learners" class="calc-input" placeholder="e.g., 10">
+                </div>
+                <div class="calc-form-group">
+                  <label for="team-comp" class="calc-label">Combined Annual Compensation ($)</label>
+                  <input type="number" id="team-comp" class="calc-input" placeholder="e.g., 750000">
+                </div>
+                <div class="calc-form-group">
+                  <label for="team-work-hours" class="calc-label">Average Work Hours</label>
+                  <input type="number" id="team-work-hours" class="calc-input" value="2080">
+                </div>
+                <div class="calc-form-group">
+                  <label for="team-value-multiple" class="calc-label">Value of Work Multiple</label>
+                  <input type="number" id="team-value-multiple" class="calc-input" value="2.0" step="0.1">
+                </div>
+                <div class="calc-form-group">
+                  <label for="team-productivity-lift" class="calc-label">Est. Productivity/Efficiency Lift (%)</label>
+                  <input type="number" id="team-productivity-lift" class="calc-input" placeholder="e.g., 15" max="100">
+                </div>
+              </div>
+            </div>
+
+            <!-- Team Cost Analysis -->
+            <div class="calc-card">
+              <div class="calc-card-header">
+                <h3 class="calc-card-title">👥 Team Cost Analysis</h3>
+              </div>
+              <div class="calc-card-content">
+                <div class="calc-form-group">
+                  <label for="team-training-hours" class="calc-label">AI Training Hours Per Learner</label>
+                  <input type="number" id="team-training-hours" class="calc-input" placeholder="e.g., 40">
+                </div>
+                <div class="calc-form-group">
+                  <label for="team-license-fees" class="calc-label">AI Training License Fees Per Learner ($)</label>
+                  <input type="number" id="team-license-fees" class="calc-input" placeholder="e.g., 500">
+                </div>
+                <div class="calc-form-group">
+                  <label for="team-tech-costs" class="calc-label">AI Tech Costs Per Learner ($)</label>
+                  <input type="number" id="team-tech-costs" class="calc-input" placeholder="e.g., 1000">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin: 24px 0;">
+            <button class="calc-button calc-button-primary" onclick="calculateTeam()">
+              🧮 Calculate Team Value
+            </button>
+          </div>
+
+          <!-- Team Results -->
+          <div id="team-results" style="display: none;">
+            <!-- Results will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- JavaScript for calculator functionality -->
+  <script>
+    // Calculator functionality
+    (function() {
+      'use strict';
+      
+      // Global state
+      var currentTab = 'individual';
+      var calculationType = 'productivity';
+      
+      // Utility functions
+      function formatCurrency(amount) {
+        return new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }).format(amount || 0);
+      }
+      
+      function formatPercent(value) {
+        return (value || 0).toFixed(0) + '%';
+      }
+      
+      function showError(message) {
+        alert('Error: ' + message);
+      }
+      
+      function showSuccess(message) {
+        // Could implement toast notification here
+        console.log('Success: ' + message);
+      }
+      
+      // Tab switching
+      function initTabs() {
+        var tabButtons = document.querySelectorAll('.calc-tab-button');
+        var tabContents = document.querySelectorAll('.calc-tab-content');
+        
+        tabButtons.forEach(function(button) {
+          button.addEventListener('click', function() {
+            var tabId = this.getAttribute('data-tab');
+            
+            // Update active states
+            tabButtons.forEach(function(btn) { btn.classList.remove('active'); });
+            tabContents.forEach(function(content) { content.classList.remove('active'); });
+            
+            this.classList.add('active');
+            document.getElementById(tabId + '-tab').classList.add('active');
+            
+            currentTab = tabId;
+          });
+        });
+      }
+      
+      // Calculation type change
+      function initCalculationType() {
+        var select = document.getElementById('calculation-type');
+        if (select) {
+          select.addEventListener('change', function() {
+            calculationType = this.value;
+            // Update labels and placeholders based on calculation type
+            updateCalculationTypeLabels();
+          });
+        }
+      }
+      
+      function updateCalculationTypeLabels() {
+        // Update labels and help text based on calculation type
+        var liftLabels = document.querySelectorAll('[for$="-productivity-lift"]');
+        liftLabels.forEach(function(label) {
+          if (calculationType === 'productivity') {
+            label.textContent = 'Est. Productivity Lift (%)';
+          } else {
+            label.textContent = 'Est. Efficiency Lift (%)';
+          }
+        });
+        
+        // Update the explanation box
+        var titleElement = document.getElementById('calc-type-title');
+        var descriptionElement = document.getElementById('calc-type-description');
+        
+        if (titleElement && descriptionElement) {
+          if (calculationType === 'productivity') {
+            titleElement.textContent = 'Productivity Lift:';
+            descriptionElement.textContent = 'Increase Output and Revenue by Doing More.';
+          } else {
+            titleElement.textContent = 'Efficiency Lift:';
+            descriptionElement.textContent = 'Save Time and Money by Doing Work Faster.';
+          }
+        }
+      }
+      
+      // Individual calculations
+      function calculateIndividualProductivity(values) {
+        var costPerHour = values.comp / values.workHours;
+        var annualValueOfWork = values.comp * values.valueOfWorkMultiple;
+        var valueOfProductivityLift = annualValueOfWork * (values.estProductivityLift / 100);
+        var newAnnualValueOfWork = annualValueOfWork + valueOfProductivityLift;
+        var aiTrainingHumanCosts = values.aiTrainingHours * costPerHour;
+        var totalAiTrainingCosts = aiTrainingHumanCosts + values.aiTrainingLicenseFees;
+        var totalAiCosts = totalAiTrainingCosts + values.aiTechCosts;
+        var firstYearNetValue = valueOfProductivityLift - totalAiCosts;
+        var roi = totalAiCosts > 0 ? (firstYearNetValue / totalAiCosts) * 100 : 0;
+        
+        return {
+          costPerHour: costPerHour,
+          annualValueOfWork: annualValueOfWork,
+          valueOfProductivityLift: valueOfProductivityLift,
+          newAnnualValueOfWork: newAnnualValueOfWork,
+          aiTrainingHumanCosts: aiTrainingHumanCosts,
+          totalAiTrainingCosts: totalAiTrainingCosts,
+          totalAiCosts: totalAiCosts,
+          firstYearNetValue: firstYearNetValue,
+          roi: roi
+        };
+      }
+      
+      function calculateIndividualEfficiency(values) {
+        var costPerHour = values.comp / values.workHours;
+        var annualValueOfWork = values.comp;
+        var hoursSaved = values.workHours * (values.estProductivityLift / 100);
+        var valueOfProductivityLift = hoursSaved * costPerHour;
+        var aiTrainingHumanCosts = values.aiTrainingHours * costPerHour;
+        var totalAiTrainingCosts = aiTrainingHumanCosts + values.aiTrainingLicenseFees;
+        var totalAiCosts = totalAiTrainingCosts + values.aiTechCosts;
+        var firstYearNetValue = valueOfProductivityLift - totalAiCosts;
+        var roi = totalAiCosts > 0 ? (firstYearNetValue / totalAiCosts) * 100 : 0;
+        
+        return {
+          costPerHour: costPerHour,
+          annualValueOfWork: annualValueOfWork,
+          valueOfProductivityLift: valueOfProductivityLift,
+          hoursSaved: hoursSaved,
+          aiTrainingHumanCosts: aiTrainingHumanCosts,
+          totalAiTrainingCosts: totalAiTrainingCosts,
+          totalAiCosts: totalAiCosts,
+          firstYearNetValue: firstYearNetValue,
+          roi: roi
+        };
+      }
+      
+      function generateIndividualInsights(values, results) {
+        var insights = [];
+        
+        if (results.roi > 200) {
+          insights.push('Excellent ROI! This AI investment shows strong financial returns.');
+        } else if (results.roi > 100) {
+          insights.push('Good ROI potential with positive returns expected.');
+        } else if (results.roi > 0) {
+          insights.push('Positive ROI, but consider optimization opportunities.');
+        } else {
+          insights.push('Consider adjusting training approach or productivity expectations.');
+        }
+        
+        if (values.estProductivityLift > 20) {
+          insights.push('High productivity lift target - ensure adequate training support.');
+        }
+        
+        if (results.totalAiCosts / values.comp > 0.5) {
+          insights.push('AI costs are significant relative to compensation - monitor carefully.');
+        }
+        
+        return insights.slice(0, 3);
+      }
+      
+      // Team calculations
+      function calculateTeamProductivity(values) {
+        var combinedWorkHours = values.numberOfLearners * values.averageWorkHours;
+        var blendedCostPerHour = values.combinedComp / combinedWorkHours;
+        var totalAnnualValueOfWork = values.combinedComp * values.valueOfWorkMultiple;
+        var avgAnnualValueOfWork = totalAnnualValueOfWork / values.numberOfLearners;
+        var totalValueOfProductivityLift = totalAnnualValueOfWork * (values.estProductivityLift / 100);
+        var avgValueOfProductivityLift = totalValueOfProductivityLift / values.numberOfLearners;
+        var avgNewAnnualValueOfWork = avgAnnualValueOfWork + avgValueOfProductivityLift;
+        var combinedAiTrainingHours = values.numberOfLearners * values.aiTrainingHoursPerLearner;
+        var combinedAiTrainingHumanCosts = combinedAiTrainingHours * blendedCostPerHour;
+        var combinedAiTrainingLicenseFees = values.numberOfLearners * values.aiTrainingLicenseFeesPerLearner;
+        var totalAiTechCosts = values.numberOfLearners * values.aiTechCostsPerLearner;
+        var totalAiCosts = combinedAiTrainingHumanCosts + combinedAiTrainingLicenseFees + totalAiTechCosts;
+        var firstYearNetValue = totalValueOfProductivityLift - totalAiCosts;
+        var roi = totalAiCosts > 0 ? (firstYearNetValue / totalAiCosts) * 100 : 0;
+        
+        return {
+          combinedWorkHours: combinedWorkHours,
+          blendedCostPerHour: blendedCostPerHour,
+          avgAnnualValueOfWork: avgAnnualValueOfWork,
+          totalValueOfProductivityLift: totalValueOfProductivityLift,
+          avgValueOfProductivityLift: avgValueOfProductivityLift,
+          avgNewAnnualValueOfWork: avgNewAnnualValueOfWork,
+          combinedAiTrainingHours: combinedAiTrainingHours,
+          combinedAiTrainingHumanCosts: combinedAiTrainingHumanCosts,
+          combinedAiTrainingLicenseFees: combinedAiTrainingLicenseFees,
+          totalAiTechCosts: totalAiTechCosts,
+          totalAiCosts: totalAiCosts,
+          firstYearNetValue: firstYearNetValue,
+          roi: roi
+        };
+      }
+      
+      function calculateTeamEfficiency(values) {
+        var combinedWorkHours = values.numberOfLearners * values.averageWorkHours;
+        var blendedCostPerHour = values.combinedComp / combinedWorkHours;
+        var totalHoursSaved = combinedWorkHours * (values.estProductivityLift / 100);
+        var totalValueOfProductivityLift = totalHoursSaved * blendedCostPerHour;
+        var combinedAiTrainingHours = values.numberOfLearners * values.aiTrainingHoursPerLearner;
+        var combinedAiTrainingHumanCosts = combinedAiTrainingHours * blendedCostPerHour;
+        var combinedAiTrainingLicenseFees = values.numberOfLearners * values.aiTrainingLicenseFeesPerLearner;
+        var totalAiTechCosts = values.numberOfLearners * values.aiTechCostsPerLearner;
+        var totalAiCosts = combinedAiTrainingHumanCosts + combinedAiTrainingLicenseFees + totalAiTechCosts;
+        var firstYearNetValue = totalValueOfProductivityLift - totalAiCosts;
+        var roi = totalAiCosts > 0 ? (firstYearNetValue / totalAiCosts) * 100 : 0;
+        
+        return {
+          combinedWorkHours: combinedWorkHours,
+          blendedCostPerHour: blendedCostPerHour,
+          totalValueOfProductivityLift: totalValueOfProductivityLift,
+          totalHoursSaved: totalHoursSaved,
+          combinedAiTrainingHours: combinedAiTrainingHours,
+          combinedAiTrainingHumanCosts: combinedAiTrainingHumanCosts,
+          combinedAiTrainingLicenseFees: combinedAiTrainingLicenseFees,
+          totalAiTechCosts: totalAiTechCosts,
+          totalAiCosts: totalAiCosts,
+          firstYearNetValue: firstYearNetValue,
+          roi: roi
+        };
+      }
+      
+      function generateTeamInsights(values, results) {
+        var insights = [];
+        
+        if (results.roi > 200) {
+          insights.push('Outstanding team ROI! This AI initiative shows excellent financial returns.');
+        } else if (results.roi > 100) {
+          insights.push('Strong team ROI with positive returns across the group.');
+        } else if (results.roi > 0) {
+          insights.push('Positive team ROI, consider scaling or optimization.');
+        } else {
+          insights.push('Team investment needs adjustment for positive returns.');
+        }
+        
+        if (values.numberOfLearners > 20) {
+          insights.push('Large team deployment - consider phased rollout approach.');
+        }
+        
+        if (results.totalAiCosts / values.combinedComp > 0.3) {
+          insights.push('Significant investment relative to team compensation.');
+        }
+        
+        return insights.slice(0, 3);
+      }
+      
+      // Validation functions
+      function validateIndividualInputs() {
+        var comp = parseFloat(document.getElementById('ind-comp').value);
+        var workHours = parseFloat(document.getElementById('ind-work-hours').value);
+        var valueMultiple = parseFloat(document.getElementById('ind-value-multiple').value);
+        var productivityLift = parseFloat(document.getElementById('ind-productivity-lift').value);
+        var trainingHours = parseFloat(document.getElementById('ind-training-hours').value);
+        var licenseFees = parseFloat(document.getElementById('ind-license-fees').value) || 0;
+        var techCosts = parseFloat(document.getElementById('ind-tech-costs').value) || 0;
+        
+        if (!comp || comp <= 0) {
+          showError('Please enter a valid annual compensation');
+          return null;
+        }
+        if (!workHours || workHours <= 0) {
+          showError('Please enter valid work hours');
+          return null;
+        }
+        if (!valueMultiple || valueMultiple <= 0) {
+          showError('Please enter a valid value multiple');
+          return null;
+        }
+        if (!productivityLift || productivityLift <= 0 || productivityLift > 100) {
+          showError('Please enter a valid productivity lift percentage (1-100)');
+          return null;
+        }
+        if (!trainingHours || trainingHours <= 0) {
+          showError('Please enter valid training hours');
+          return null;
+        }
+        
+        return {
+          comp: comp,
+          workHours: workHours,
+          valueOfWorkMultiple: valueMultiple,
+          estProductivityLift: productivityLift,
+          aiTrainingHours: trainingHours,
+          aiTrainingLicenseFees: licenseFees,
+          aiTechCosts: techCosts
+        };
+      }
+      
+      function validateTeamInputs() {
+        var learners = parseFloat(document.getElementById('team-learners').value);
+        var comp = parseFloat(document.getElementById('team-comp').value);
+        var workHours = parseFloat(document.getElementById('team-work-hours').value);
+        var valueMultiple = parseFloat(document.getElementById('team-value-multiple').value);
+        var productivityLift = parseFloat(document.getElementById('team-productivity-lift').value);
+        var trainingHours = parseFloat(document.getElementById('team-training-hours').value);
+        var licenseFees = parseFloat(document.getElementById('team-license-fees').value) || 0;
+        var techCosts = parseFloat(document.getElementById('team-tech-costs').value) || 0;
+        
+        if (!learners || learners <= 0) {
+          showError('Please enter a valid number of learners');
+          return null;
+        }
+        if (!comp || comp <= 0) {
+          showError('Please enter valid combined compensation');
+          return null;
+        }
+        if (!workHours || workHours <= 0) {
+          showError('Please enter valid work hours');
+          return null;
+        }
+        if (!valueMultiple || valueMultiple <= 0) {
+          showError('Please enter a valid value multiple');
+          return null;
+        }
+        if (!productivityLift || productivityLift <= 0 || productivityLift > 100) {
+          showError('Please enter a valid productivity lift percentage (1-100)');
+          return null;
+        }
+        if (!trainingHours || trainingHours <= 0) {
+          showError('Please enter valid training hours per learner');
+          return null;
+        }
+        
+        return {
+          numberOfLearners: learners,
+          combinedComp: comp,
+          averageWorkHours: workHours,
+          valueOfWorkMultiple: valueMultiple,
+          estProductivityLift: productivityLift,
+          aiTrainingHoursPerLearner: trainingHours,
+          aiTrainingLicenseFeesPerLearner: licenseFees,
+          aiTechCostsPerLearner: techCosts
+        };
+      }
+      
+      // Results display functions
+      function displayIndividualResults(results, insights) {
+        var resultsHtml = '<div class="calc-results">' +
+          '<div class="calc-results-header">' +
+            '<h2 class="calc-results-title">Individual ' + (calculationType === 'productivity' ? 'Productivity' : 'Efficiency') + ' Analysis Results</h2>' +
+            '<button class="calc-button calc-button-outline" onclick="exportToPDF()">📄 Export PDF</button>' +
+          '</div>' +
+          '<div class="calc-results-grid">' +
+            '<div class="calc-result-section">' +
+              '<h3>💚 Value Analysis Results</h3>' +
+              '<div class="calc-metric">' +
+                '<div class="calc-metric-label">Cost Per Hour</div>' +
+                '<div class="calc-metric-value">' + formatCurrency(results.costPerHour) + '</div>' +
+              '</div>';
+        
+        if (calculationType === 'efficiency') {
+          resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">Est. Hours Saved</div>' +
+            '<div class="calc-metric-value">' + (results.hoursSaved || 0).toLocaleString() + ' hrs</div>' +
+          '</div>';
+        }
+        
+        resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">' + (calculationType === 'productivity' ? 'Current Annual Value of Work' : 'Annual Cost (Comp)') + '</div>' +
+            '<div class="calc-metric-value">' + formatCurrency(results.annualValueOfWork) + '</div>' +
+          '</div>' +
+          '<div class="calc-metric">' +
+            '<div class="calc-metric-label">' + (calculationType === 'productivity' ? 'Productivity Lift Annual Value' : 'Value of Savings') + '</div>' +
+            '<div class="calc-metric-value large success">' + formatCurrency(results.valueOfProductivityLift) + '</div>' +
+          '</div>';
+        
+        if (calculationType === 'productivity') {
+          resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">New Annual Value of Work</div>' +
+            '<div class="calc-metric-value large primary">' + formatCurrency(results.newAnnualValueOfWork) + '</div>' +
+          '</div>';
+        }
+        
+        resultsHtml += '</div>' +
+          '<div class="calc-result-section">' +
+            '<h3>⚠️ Cost Analysis Results</h3>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">AI Training Human Costs</div>' +
+              '<div class="calc-metric-value">' + formatCurrency(results.aiTrainingHumanCosts) + '</div>' +
+            '</div>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">AI Training Total Costs</div>' +
+              '<div class="calc-metric-value">' + formatCurrency(results.totalAiTrainingCosts) + '</div>' +
+            '</div>' +
+            '<div class="calc-metric" style="padding-top: 8px; border-top: 1px solid var(--calculator-gray-200);">' +
+              '<div class="calc-metric-label">Total AI Costs</div>' +
+              '<div class="calc-metric-value large warning">' + formatCurrency(results.totalAiCosts) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="calc-result-section">' +
+            '<h3>🎯 Net Value & ROI</h3>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">First Year Net Value</div>' +
+              '<div class="calc-metric-value large ' + (results.firstYearNetValue >= 0 ? 'success' : 'error') + '">' + formatCurrency(results.firstYearNetValue) + '</div>' +
+            '</div>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">First Year ROI</div>' +
+              '<div class="calc-metric-value large ' + (results.roi >= 0 ? 'success' : 'error') + '">' + formatPercent(results.roi) + '</div>' +
+            '</div>' +
+            '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--calculator-gray-200);">' +
+              '<h4 style="font-size: 14px; font-weight: 600; color: var(--calculator-gray-900); margin: 0 0 8px 0;">Key Insights</h4>' +
+              '<div style="font-size: 12px; color: var(--calculator-gray-600);">';
+        
+        insights.forEach(function(insight) {
+          resultsHtml += '<div style="margin-bottom: 4px;">• ' + insight + '</div>';
+        });
+        
+        resultsHtml += '</div></div></div></div></div>';
+        
+        document.getElementById('individual-results').innerHTML = resultsHtml;
+        document.getElementById('individual-results').style.display = 'block';
+      }
+      
+      function displayTeamResults(results, insights) {
+        var resultsHtml = '<div class="calc-results">' +
+          '<div class="calc-results-header">' +
+            '<h2 class="calc-results-title">Team ' + (calculationType === 'productivity' ? 'Productivity' : 'Efficiency') + ' Analysis Results</h2>' +
+            '<button class="calc-button calc-button-outline" onclick="exportToPDF()">📄 Export PDF</button>' +
+          '</div>' +
+          '<div class="calc-results-grid">' +
+            '<div class="calc-result-section">' +
+              '<h3>💚 Value Analysis Results</h3>' +
+              '<div class="calc-metric">' +
+                '<div class="calc-metric-label">Blended Cost Per Hour</div>' +
+                '<div class="calc-metric-value">' + formatCurrency(results.blendedCostPerHour) + '</div>' +
+              '</div>';
+        
+        if (calculationType === 'efficiency') {
+          resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">Est. Hours Saved</div>' +
+            '<div class="calc-metric-value">' + (results.totalHoursSaved || 0).toLocaleString() + ' hrs</div>' +
+          '</div>';
+        }
+        
+        if (calculationType === 'productivity') {
+          resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">Avg. Annual Value of Work</div>' +
+            '<div class="calc-metric-value">' + formatCurrency(results.avgAnnualValueOfWork) + '</div>' +
+          '</div>' +
+          '<div class="calc-metric">' +
+            '<div class="calc-metric-label">Avg. Value of Productivity Lift</div>' +
+            '<div class="calc-metric-value">' + formatCurrency(results.avgValueOfProductivityLift) + '</div>' +
+          '</div>' +
+          '<div class="calc-metric">' +
+            '<div class="calc-metric-label">Avg. New Annual Value of Work</div>' +
+            '<div class="calc-metric-value">' + formatCurrency(results.avgNewAnnualValueOfWork) + '</div>' +
+          '</div>';
+        }
+        
+        resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">' + (calculationType === 'productivity' ? 'Total Annual Productivity Lift Value' : 'Total Value of Savings') + '</div>' +
+            '<div class="calc-metric-value large success">' + formatCurrency(results.totalValueOfProductivityLift) + '</div>' +
+          '</div>';
+        
+        if (calculationType === 'productivity') {
+          resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">New Avg. Annual Value of Work</div>' +
+            '<div class="calc-metric-value large primary">' + formatCurrency((results.avgAnnualValueOfWork || 0) + (results.avgValueOfProductivityLift || 0)) + '</div>' +
+          '</div>';
+        }
+        
+        resultsHtml += '</div>' +
+          '<div class="calc-result-section">' +
+            '<h3>⚠️ Cost Analysis Results</h3>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">Combined Training Hours</div>' +
+              '<div class="calc-metric-value">' + (results.combinedAiTrainingHours || 0).toLocaleString() + ' hrs</div>' +
+            '</div>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">Combined Human Costs</div>' +
+              '<div class="calc-metric-value">' + formatCurrency(results.combinedAiTrainingHumanCosts) + '</div>' +
+            '</div>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">Combined License Fees</div>' +
+              '<div class="calc-metric-value">' + formatCurrency(results.combinedAiTrainingLicenseFees) + '</div>' +
+            '</div>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">Combined Tech Costs</div>' +
+              '<div class="calc-metric-value">' + formatCurrency(results.totalAiTechCosts) + '</div>' +
+            '</div>' +
+            '<div class="calc-metric" style="padding-top: 8px; border-top: 1px solid var(--calculator-gray-200);">' +
+              '<div class="calc-metric-label">Total AI Costs</div>' +
+              '<div class="calc-metric-value large warning">' + formatCurrency(results.totalAiCosts) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="calc-result-section">' +
+            '<h3>🎯 Net Value & ROI</h3>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">Team First Year Net Value</div>' +
+              '<div class="calc-metric-value large ' + (results.firstYearNetValue >= 0 ? 'success' : 'error') + '">' + formatCurrency(results.firstYearNetValue) + '</div>' +
+            '</div>' +
+            '<div class="calc-metric">' +
+              '<div class="calc-metric-label">Team First Year ROI</div>' +
+              '<div class="calc-metric-value large ' + (results.roi >= 0 ? 'success' : 'error') + '">' + formatPercent(results.roi) + '</div>' +
+            '</div>' +
+            '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--calculator-gray-200);">' +
+              '<h4 style="font-size: 14px; font-weight: 600; color: var(--calculator-gray-900); margin: 0 0 8px 0;">Key Insights</h4>' +
+              '<div style="font-size: 12px; color: var(--calculator-gray-600);">';
+        
+        insights.forEach(function(insight) {
+          resultsHtml += '<div style="margin-bottom: 4px;">• ' + insight + '</div>';
+        });
+        
+        resultsHtml += '</div></div></div></div></div>';
+        
+        document.getElementById('team-results').innerHTML = resultsHtml;
+        document.getElementById('team-results').style.display = 'block';
+      }
+      
+      // Global calculation functions
+      window.calculateIndividual = function() {
+        var values = validateIndividualInputs();
+        if (!values) return;
+        
+        try {
+          var results, insights;
+          if (calculationType === 'productivity') {
+            results = calculateIndividualProductivity(values);
+          } else {
+            results = calculateIndividualEfficiency(values);
+          }
+          
+          insights = generateIndividualInsights(values, results);
+          displayIndividualResults(results, insights);
+          showSuccess('Individual ' + calculationType + ' analysis calculated successfully.');
+        } catch (error) {
+          showError('An error occurred during calculation. Please try again.');
+          console.error('Calculation error:', error);
+        }
+      };
+      
+      window.calculateTeam = function() {
+        var values = validateTeamInputs();
+        if (!values) return;
+        
+        try {
+          var results, insights;
+          if (calculationType === 'productivity') {
+            results = calculateTeamProductivity(values);
+          } else {
+            results = calculateTeamEfficiency(values);
+          }
+          
+          insights = generateTeamInsights(values, results);
+          displayTeamResults(results, insights);
+          showSuccess('Team ' + calculationType + ' analysis calculated successfully.');
+        } catch (error) {
+          showError('An error occurred during calculation. Please try again.');
+          console.error('Calculation error:', error);
+        }
+      };
+      
+      // PDF export function
+      window.exportToPDF = function() {
+        try {
+          // Add print styles
+          var printStyle = document.createElement('style');
+          printStyle.textContent = '@media print { .calc-button, .no-print { display: none !important; } .hub_ai_value_calculator_wrapper { background: white !important; } }';
+          document.head.appendChild(printStyle);
+          
+          // Open print dialog
+          window.print();
+          
+          // Remove print styles after a delay
+          setTimeout(function() {
+            document.head.removeChild(printStyle);
+          }, 1000);
+        } catch (error) {
+          showError('Could not open print dialog. Please try again.');
+          console.error('Print error:', error);
+        }
+      };
+      
+      // Initialize the calculator
+      function initCalculator() {
+        initTabs();
+        initCalculationType();
+        updateCalculationTypeLabels();
+        
+        // Set default values
+        document.getElementById('ind-work-hours').value = '2080';
+        document.getElementById('ind-value-multiple').value = '2.0';
+        document.getElementById('team-work-hours').value = '2080';
+        document.getElementById('team-value-multiple').value = '2.0';
+        
+        console.log('AI Value Calculator initialized successfully');
+      }
+      
+      // Start initialization when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCalculator);
+      } else {
+        initCalculator();
+      }
+      
+    })();
+  </script>
+</div>

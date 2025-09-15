@@ -1,0 +1,50 @@
+{
+  "label": "AI Value Calculator (CSP Compatible)",
+  "description": "Interactive AI productivity and efficiency calculator with ROI analysis - HubSpot CSP compatible version",
+  "help_text": "Add this module to any page to provide visitors with an interactive calculator for estimating AI implementation value, productivity gains, and ROI. This version is optimized for HubSpot's Content Security Policy.",
+  "host_template_types": ["PAGE", "BLOG_POST", "LANDING_PAGE"],
+  "icon": "💡",
+  "is_available_for_new_content": true,
+  "module_id": 12345678,
+  "widget_type": "module",
+  "smart_type": "NOT_SMART",
+  "css_assets": [],
+  "js_assets": [],
+  "other_assets": [],
+  "tags": ["calculator", "ai", "productivity", "roi", "interactive"],
+  "fields": [
+    {
+      "id": "ai_calculator_title",
+      "name": "ai_calculator_title",
+      "label": "Calculator Title",
+      "required": false,
+      "locked": false,
+      "display": "text",
+      "type": "text",
+      "default": "AI Value Calculator",
+      "help_text": "Main title displayed at the top of the calculator"
+    },
+    {
+      "id": "ai_calculator_subtitle", 
+      "name": "ai_calculator_subtitle",
+      "label": "Calculator Subtitle",
+      "required": false,
+      "locked": false,
+      "display": "text",
+      "type": "text", 
+      "default": "An Interactive Tool to Estimate Efficiency and Productivity Lift from AI.",
+      "help_text": "Subtitle description displayed below the main title"
+    },
+    {
+      "id": "calculator_height",
+      "name": "calculator_height", 
+      "label": "Calculator Height (px)",
+      "required": false,
+      "locked": false,
+      "display": "text",
+      "type": "text",
+      "default": "800",
+      "help_text": "Height of the calculator iframe in pixels"
+    }
+  ]
+}
