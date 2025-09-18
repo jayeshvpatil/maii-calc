@@ -41,7 +41,7 @@ export function IndividualCostAnalysis({ values, onChange }: IndividualCostAnaly
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               id="aiTrainingHours"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               placeholder="e.g., 25"
@@ -68,7 +68,7 @@ export function IndividualCostAnalysis({ values, onChange }: IndividualCostAnaly
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               step="0.01"
               id="aiTrainingLicenseFees"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
@@ -96,7 +96,7 @@ export function IndividualCostAnalysis({ values, onChange }: IndividualCostAnaly
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               step="0.01"
               id="aiTechCosts"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"

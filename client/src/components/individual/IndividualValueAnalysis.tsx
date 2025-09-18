@@ -50,6 +50,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
             <Input
               type="number"
               id="comp"
+              min="0"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               placeholder="e.g., 120000"
               value={values.comp}
@@ -75,7 +76,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               id="workHours"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               placeholder="e.g., 2080"
@@ -102,7 +103,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               step="0.1"
               id="valueOfWorkMultiple"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
@@ -130,7 +131,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               step="1"
               max="100"
               id="estProductivityLift"

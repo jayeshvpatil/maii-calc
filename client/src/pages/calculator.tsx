@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { IndividualValueAnalysis } from "@/components/individual/IndividualValueAnalysis";
@@ -342,44 +341,43 @@ export default function CalculatorPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="flex-1">
-                  <label htmlFor="calculation-type" className="block text-sm font-medium text-calculator-gray-700 mb-2">
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-calculator-gray-700 mb-4">
                     What would you like to calculate?
                   </label>
-                  <Select value={calculationType} onValueChange={(value: "efficiency" | "productivity") => setCalculationType(value)}>
-                    <SelectTrigger className="w-full sm:w-80">
-                      <SelectValue placeholder="Select calculation type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="productivity">
-                        <div className="flex flex-col">
-                          <span className="font-medium">Productivity Lift</span>
-                          <span className="text-xs text-calculator-gray-500">
-                            Calculate value from increased output & revenue
-                          </span>
-                        </div>
-                      </SelectItem>
-                      <SelectItem value="efficiency">
-                        <div className="flex flex-col">
-                          <span className="font-medium">Efficiency Lift</span>
-                          <span className="text-xs text-calculator-gray-500">
-                            Calculate value from time & cost savings.
-                          </span>
-                        </div>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="bg-calculator-gray-50 rounded-lg p-3 text-sm text-calculator-gray-600">
-                  <strong className="text-calculator-gray-800">
-                    {calculationType === "productivity" ? "Productivity Lift:" : "Efficiency Lift:"}
-                  </strong>
-                  <br />
-                  {calculationType === "productivity" 
-                    ? "Increase Output and Revenue by Doing More."
-                    : "Save Time and Money by Doing Work Faster."
-                  }
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-3">
+                      <input
+                        type="radio"
+                        id="calc-productivity"
+                        name="calculation-type"
+                        value="productivity"
+                        checked={calculationType === "productivity"}
+                        onChange={(e) => setCalculationType(e.target.value as "productivity" | "efficiency")}
+                        className="mt-1 h-4 w-4 text-primary border-calculator-gray-300 focus:ring-primary"
+                      />
+                      <label htmlFor="calc-productivity" className="text-sm cursor-pointer flex-1">
+                        <span className="font-semibold text-calculator-gray-900">Productivity Lift:</span>{" "}
+                        <span className="text-calculator-gray-600">Increase Output and Revenue by Doing More</span>
+                      </label>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <input
+                        type="radio"
+                        id="calc-efficiency"
+                        name="calculation-type"
+                        value="efficiency"
+                        checked={calculationType === "efficiency"}
+                        onChange={(e) => setCalculationType(e.target.value as "productivity" | "efficiency")}
+                        className="mt-1 h-4 w-4 text-primary border-calculator-gray-300 focus:ring-primary"
+                      />
+                      <label htmlFor="calc-efficiency" className="text-sm cursor-pointer flex-1">
+                        <span className="font-semibold text-calculator-gray-900">Efficiency Lift:</span>{" "}
+                        <span className="text-calculator-gray-600">Save Time and Money by Doing Work Faster</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -438,6 +436,8 @@ export default function CalculatorPage() {
                   disabled={isCalculating}
                   className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   data-testid="button-calculate-individual"
+                  data-track="calculate-individual-value"
+                  data-analytics="button-click"
                 >
                   <Calculator className="mr-2 h-4 w-4" />
                   {isCalculating
@@ -457,6 +457,8 @@ export default function CalculatorPage() {
                       onClick={exportToPDF}
                       variant="outline"
                       className="flex items-center gap-2 no-print"
+                      data-track="export-individual-pdf"
+                      data-analytics="button-click"
                     >
                       <Download className="h-4 w-4" />
                       Export PDF
@@ -662,6 +664,8 @@ export default function CalculatorPage() {
                   disabled={isCalculating}
                   className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   data-testid="button-calculate-team"
+                  data-track="calculate-team-value"
+                  data-analytics="button-click"
                 >
                   <Calculator className="mr-2 h-4 w-4" />
                   {isCalculating ? "Calculating..." : `Calculate Team ${calculationType === "productivity" ? "Productivity" : "Efficiency"} Value`}
@@ -679,6 +683,8 @@ export default function CalculatorPage() {
                       onClick={exportToPDF}
                       variant="outline"
                       className="flex items-center gap-2 no-print"
+                      data-track="export-team-pdf"
+                      data-analytics="button-click"
                     >
                       <Download className="h-4 w-4" />
                       Export PDF

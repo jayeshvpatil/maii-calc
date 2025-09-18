@@ -49,7 +49,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               id="numberOfLearners"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               placeholder="e.g., 25"
@@ -76,7 +76,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               id="combinedComp"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               placeholder="e.g., 2500000"
@@ -103,7 +103,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               id="averageWorkHours"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
               placeholder="e.g., 2080"
@@ -130,7 +130,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               step="0.1"
               id="valueOfWorkMultiple"
               className="w-full px-4 py-3 border border-calculator-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
@@ -160,7 +160,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
               </Tooltip>
             </div>
             <Input
-              type="number"
+              type="number" min="0"
               step="1"
               max="100"
               id="estProductivityLift"
