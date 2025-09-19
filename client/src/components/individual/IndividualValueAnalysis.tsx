@@ -16,10 +16,10 @@ interface IndividualValueAnalysisProps {
 }
 
 export function IndividualValueAnalysis({ values, onChange, calculationType }: IndividualValueAnalysisProps) {
-  const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Time Savings (%)";
+  const liftLabel = calculationType === "productivity" ? "Estimated Productivity Lift (%)" : "Estimated Efficiency Lift (%)";
   const liftTooltip = calculationType === "productivity" 
-    ? "Explore different assumptions. Conservative: 10%" 
-    : "Explore different assumptions. Conservative: 10%";
+    ? "The expected percentage improvement in productivity from AI tools. Explore different assumptions. Conservative estimate: 10%." 
+    : "The expected percentage improvement in efficiency from AI tools. Explore different assumptions. Conservative estimate: 10%.";
   
   return (
     <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
@@ -43,7 +43,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Enter total annual comp (salary + payroll taxes + benefits)</p>
+                  <p>The total annual compensation (salary + payroll taxes + benefits).</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -62,7 +62,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Label htmlFor="workHours" className="block text-sm font-medium text-calculator-gray-700">
-                Work Hours (per year)
+                Annual Work Hours
               </Label>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -71,7 +71,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Standard work year based on 40 hr/week (2080). Adjust as needed.</p>
+                  <p>The number of hours worked per year. The standard work year based on 40 hr/week is 2,080 hours.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -98,7 +98,7 @@ export function IndividualValueAnalysis({ values, onChange, calculationType }: I
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Varies by profession and role. Conservative: 1.5-2.0x</p>
+                  <p>How much more value does this person's work generate vs. their compensation? Varies by profession and role. A conservative multiple would be 1.5 - 2.0x.</p>
                 </TooltipContent>
               </Tooltip>
             </div>

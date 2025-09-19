@@ -47,7 +47,7 @@ export function TeamCostAnalysis({ values, onChange }: TeamCostAnalysisProps) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    Est. number of AI training hours for the year per learner
+                    Annual training hours needed per learner, including initial training and ongoing learning sessions.
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -84,8 +84,7 @@ export function TeamCostAnalysis({ values, onChange }: TeamCostAnalysisProps) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    Cost of AI training license and related fees per learner
-                    (speakers, workshops, etc.)
+                    Annual cost per learner for training programs, courses, or certifications for AI tools and skills (speakers, workshops, etc.).
                   </p>
                 </TooltipContent>
               </Tooltip>
@@ -123,8 +122,7 @@ export function TeamCostAnalysis({ values, onChange }: TeamCostAnalysisProps) {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>
-                    Related tech costs such as ChatGPT or Gemini annual license
-                    fees per learner
+                    Annual cost per learner for software licenses, subscriptions, and technology costs for AI tools.
                   </p>
                 </TooltipContent>
               </Tooltip>

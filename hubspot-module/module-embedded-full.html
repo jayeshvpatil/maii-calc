@@ -307,32 +307,41 @@
       width: 16px;
       height: 16px;
       border-radius: 50%;
-      background: var(--primary);
+      background: var(--calculator-gray-400);
       color: white;
       font-size: 10px;
       font-weight: bold;
       vertical-align: middle;
+      border: none;
+      cursor: help;
+      transition: background 0.2s ease;
+    }
+
+    .calc-tooltip-icon:hover {
+      background: var(--calculator-gray-500);
     }
 
     .calc-tooltip-content {
       visibility: hidden;
       opacity: 0;
       position: absolute;
-      bottom: 125%;
+      bottom: 130%;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--calculator-gray-800);
+      background: var(--calculator-gray-900);
       color: white;
-      padding: 12px;
+      padding: 16px 20px;
       border-radius: 8px;
-      font-size: 12px;
-      line-height: 1.4;
-      white-space: nowrap;
-      max-width: 250px;
+      font-size: 13px;
+      line-height: 1.5;
+      width: 320px;
+      max-width: 90vw;
       white-space: normal;
-      z-index: 1000;
-      transition: opacity 0.2s, visibility 0.2s;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 9999;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
     }
 
     .calc-tooltip-content:before {
@@ -341,8 +350,50 @@
       top: 100%;
       left: 50%;
       transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: var(--calculator-gray-800);
+      border: 6px solid transparent;
+      border-top-color: var(--calculator-gray-900);
+    }
+
+    /* Improved positioning for tooltips near edges */
+    .calc-tooltip-content.tooltip-right {
+      left: 0;
+      transform: translateX(0);
+    }
+
+    .calc-tooltip-content.tooltip-left {
+      left: auto;
+      right: 0;
+      transform: translateX(0);
+    }
+
+    /* Fix tooltip positioning for first items */
+    .calc-form-group:first-child .calc-tooltip-content,
+    .calc-card:first-child .calc-tooltip-content {
+      bottom: auto;
+      top: 130%;
+    }
+
+    .calc-form-group:first-child .calc-tooltip-content:before,
+    .calc-card:first-child .calc-tooltip-content:before {
+      top: auto;
+      bottom: 100%;
+      border-top-color: transparent;
+      border-bottom-color: var(--calculator-gray-900);
+    }
+
+    /* Special positioning for bottom tooltips */
+    .calc-form-group:last-child .calc-tooltip-content,
+    .calc-card:last-child .calc-tooltip-content {
+      bottom: 130%;
+      top: auto;
+    }
+
+    .calc-form-group:last-child .calc-tooltip-content:before,
+    .calc-card:last-child .calc-tooltip-content:before {
+      top: 100%;
+      bottom: auto;
+      border-top-color: var(--calculator-gray-900);
+      border-bottom-color: transparent;
     }
 
     .calc-tooltip:hover .calc-tooltip-content,
@@ -768,23 +819,6 @@
 
   <!-- Calculator HTML Structure -->
   <div class="calc-container">
-    <!-- Header -->
-    <header class="calc-header">
-      <div class="calc-header-content">
-        <div class="calc-header-inner">
-          <div class="calc-logo-section">
-            <img src="https://ai-efficiency-pilot-601121193684.us-central1.run.app/assets/smarterx_logo.png" 
-                 alt="SmarterX Logo" 
-                 class="calc-logo"
-                 onerror="this.style.display='none'">
-            <div class="calc-title-group">
-              <h1>{{ widget.ai_calculator_title }}</h1>
-              <p>{{ widget.ai_calculator_subtitle }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
 
     <!-- Main Content -->
     <main class="calc-main">
@@ -840,7 +874,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Enter the total annual salary or compensation for this individual including benefits and bonuses.
+                        The total annual compensation (salary + payroll taxes + benefits).
                       </div>
                     </span>
                   </div>
@@ -852,7 +886,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Standard full-time is 2,080 hours (40 hours/week × 52 weeks). Adjust based on actual work schedule.
+                        The number of hours worked per year. The standard work year based on 40 hr/week is 2,080 hours.
                       </div>
                     </span>
                   </div>
@@ -864,7 +898,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        How much more value does this person's work generate vs. their compensation? Typically 2-4x for knowledge workers.
+                        How much more value does this person's work generate vs. their compensation? Varies by profession and role. A conservative multiple would be 1.5 - 2.0x.
                       </div>
                     </span>
                   </div>
@@ -876,7 +910,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Expected percentage improvement in productivity or efficiency from AI tools. Conservative estimates: 10-20%.
+                        The expected percentage improvement in efficiency or productivity from AI tools. Explore different assumptions. Conservative estimate: 10%.
                       </div>
                     </span>
                   </div>
@@ -897,7 +931,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Total hours needed for AI tool training, including initial training and ongoing learning.
+                        The number of annual training hours, including initial training and ongoing learning sessions.
                       </div>
                     </span>
                   </div>
@@ -905,11 +939,11 @@
                 </div>
                 <div class="calc-form-group">
                   <div class="calc-label-with-tooltip">
-                    <label for="ind-license-fees" class="calc-label">AI Training License Fees ($)</label>
+                    <label for="ind-license-fees" class="calc-label">AI Training Fees ($)</label>
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Cost of training programs, courses, or certifications for AI tools and skills.
+                        The annual cost for training programs, courses, or certifications for AI tools and skills (speakers, workshops, etc.).
                       </div>
                     </span>
                   </div>
@@ -921,7 +955,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Annual software licenses, subscriptions, and technology costs for AI tools.
+                        The annual cost for software licenses, subscriptions, and technologies for AI tools, including ChatGPT or Gemini license fees.
                       </div>
                     </span>
                   </div>
@@ -933,7 +967,7 @@
 
           <div style="text-align: center; margin: 24px 0;">
             <button class="calc-button calc-button-primary" onclick="calculateIndividual()" data-track="calculate-individual-value" data-analytics="button-click">
-              🧮 Calculate Individual Value
+              Calculate Individual Value
             </button>
           </div>
 
@@ -958,7 +992,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Total number of team members who will receive AI training and use AI tools.
+                        The total number of team members who will receive AI training and use AI tools.
                       </div>
                     </span>
                   </div>
@@ -970,7 +1004,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Total combined annual compensation for all team members including salaries, benefits, and bonuses.
+                        The total combined annual compensation for all team members including salaries, benefits, and bonuses.
                       </div>
                     </span>
                   </div>
@@ -982,7 +1016,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Average annual work hours per team member. Standard full-time is 2,080 hours.
+                        The average number of hours worked per year by team members. The standard work year based on 40 hr/week is 2,080 hours.
                       </div>
                     </span>
                   </div>
@@ -994,7 +1028,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        How much more value does the team's work generate vs. their compensation? Typically 2-4x for knowledge workers.
+                        How much more value does the team's work generate vs. their compensation? Varies by profession and role. A conservative multiple would be 1.5 - 2.0x.
                       </div>
                     </span>
                   </div>
@@ -1006,7 +1040,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Expected percentage improvement in team productivity or efficiency from AI tools. Conservative estimates: 10-20%.
+                        Expected percentage improvement in efficiency or productivity from AI tools. Explore different assumptions. Conservative estimate: 10%.
                       </div>
                     </span>
                   </div>
@@ -1027,7 +1061,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Training hours needed per person, including initial training and ongoing learning sessions.
+                        Annual training hours needed per learner, including initial training and ongoing learning sessions.
                       </div>
                     </span>
                   </div>
@@ -1035,11 +1069,11 @@
                 </div>
                 <div class="calc-form-group">
                   <div class="calc-label-with-tooltip">
-                    <label for="team-license-fees" class="calc-label">AI Training License Fees Per Learner ($)</label>
+                    <label for="team-license-fees" class="calc-label">AI Training Fees Per Learner ($)</label>
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Cost per person for training programs, courses, or certifications for AI tools and skills.
+                        Annual cost per learner for training programs, courses, or certifications for AI tools and skills (speakers, workshops, etc.).
                       </div>
                     </span>
                   </div>
@@ -1051,7 +1085,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Annual software licenses, subscriptions, and technology costs for AI tools per person.
+                        Annual cost per learner for software licenses, subscriptions, and technology costs for AI tools.
                       </div>
                     </span>
                   </div>
@@ -1063,7 +1097,7 @@
 
           <div style="text-align: center; margin: 24px 0;">
             <button class="calc-button calc-button-primary" onclick="calculateTeam()" data-track="calculate-team-value" data-analytics="button-click">
-              🧮 Calculate Team Value
+              Calculate Team Value
             </button>
           </div>
 
@@ -1252,6 +1286,8 @@
             label.textContent = 'Est. Efficiency Lift (%)';
           }
         });
+        
+        console.log('Calculation type updated to:', calculationType);
       }
       
       // Individual calculations

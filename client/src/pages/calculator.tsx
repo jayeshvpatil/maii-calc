@@ -26,7 +26,6 @@ import {
   TeamCalculatorResults,
 } from "@shared/schema";
 import {
-  Calculator,
   User,
   Users,
   TrendingUp,
@@ -439,7 +438,6 @@ export default function CalculatorPage() {
                   data-track="calculate-individual-value"
                   data-analytics="button-click"
                 >
-                  <Calculator className="mr-2 h-4 w-4" />
                   {isCalculating
                     ? "Calculating..."
                     : `Calculate Individual ${calculationType === "productivity" ? "Productivity" : "Efficiency"} Value`}
@@ -667,7 +665,6 @@ export default function CalculatorPage() {
                   data-track="calculate-team-value"
                   data-analytics="button-click"
                 >
-                  <Calculator className="mr-2 h-4 w-4" />
                   {isCalculating ? "Calculating..." : `Calculate Team ${calculationType === "productivity" ? "Productivity" : "Efficiency"} Value`}
                 </Button>
               </div>

@@ -17,10 +17,10 @@ interface TeamValueAnalysisProps {
 }
 
 export function TeamValueAnalysis({ values, onChange, calculationType }: TeamValueAnalysisProps) {
-  const liftLabel = calculationType === "productivity" ? "Est. Productivity Lift (%)" : "Est. Time Savings (%)";
+  const liftLabel = calculationType === "productivity" ? "Estimated Productivity Lift (%)" : "Estimated Efficiency Lift (%)";
   const liftTooltip = calculationType === "productivity" 
-    ? "Explore different assumptions. Conservative: 10%" 
-    : "Explore different assumptions. Conservative: 10%";
+    ? "Expected percentage improvement in productivity from AI tools. Explore different assumptions. Conservative estimate: 10%." 
+    : "Expected percentage improvement in efficiency from AI tools. Explore different assumptions. Conservative estimate: 10%.";
   
   return (
     <Card className="bg-white rounded-xl shadow-sm border border-calculator-gray-200">
@@ -44,7 +44,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Enter the total number of learners</p>
+                  <p>The total number of team members who will receive AI training and use AI tools.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -62,7 +62,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Label htmlFor="combinedComp" className="block text-sm font-medium text-calculator-gray-700">
-                Combined Compensation ($)
+                Combined Annual Compensation ($)
               </Label>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -71,7 +71,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Enter total annual comp (salary + payroll taxes + benefits) for all learners</p>
+                  <p>The total combined annual compensation for all team members including salaries, benefits, and bonuses.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -89,7 +89,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
               <Label htmlFor="averageWorkHours" className="block text-sm font-medium text-calculator-gray-700">
-                Average Work Hours (per year)
+                Average Work Hours
               </Label>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -98,7 +98,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Standard work year based on 40 hr/week (2080). Adjust as needed.</p>
+                  <p>The average number of hours worked per year by team members. The standard work year based on 40 hr/week is 2,080 hours.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -125,7 +125,7 @@ export function TeamValueAnalysis({ values, onChange, calculationType }: TeamVal
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Varies by profession and role. Conservative: 1.5-2.0x</p>
+                  <p>How much more value does the team's work generate vs. their compensation? Varies by profession and role. A conservative multiple would be 1.5 - 2.0x.</p>
                 </TooltipContent>
               </Tooltip>
             </div>

@@ -36,7 +36,7 @@ export function IndividualCostAnalysis({ values, onChange }: IndividualCostAnaly
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Est. number of AI training hours for the year</p>
+                  <p>The number of annual training hours, including initial training and ongoing learning sessions.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -63,7 +63,7 @@ export function IndividualCostAnalysis({ values, onChange }: IndividualCostAnaly
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Cost of AI training license and related fees (speakers, workshops, etc.)</p>
+                  <p>The annual cost for training programs, courses, or certifications for AI tools and skills (speakers, workshops, etc.).</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -91,7 +91,7 @@ export function IndividualCostAnalysis({ values, onChange }: IndividualCostAnaly
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Related tech costs such as ChatGPT or Gemini annual license fees</p>
+                  <p>The annual cost for software licenses, subscriptions, and technologies for AI tools, including ChatGPT or Gemini license fees.</p>
                 </TooltipContent>
               </Tooltip>
             </div>
