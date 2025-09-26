@@ -870,11 +870,11 @@
               <div class="calc-card-content">
                 <div class="calc-form-group">
                   <div class="calc-label-with-tooltip">
-                    <label for="ind-comp" class="calc-label">Annual Compensation ($)</label>
+                    <label for="ind-comp" class="calc-label">Compensation ($)</label>
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The total annual compensation (salary + payroll taxes + benefits).
+                        Total annual comp (salary + payroll taxes + benefits). Use base salary if total comp is unknown.
                       </div>
                     </span>
                   </div>
@@ -882,23 +882,23 @@
                 </div>
                 <div class="calc-form-group">
                   <div class="calc-label-with-tooltip">
-                    <label for="ind-work-hours" class="calc-label">Annual Work Hours</label>
+                    <label for="ind-work-hours" class="calc-label">Work Hours</label>
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The number of hours worked per year. The standard work year based on 40 hr/week is 2,080 hours.
+                        The standard work year based on 40 hrs/week is 2,080. Adjust as needed.
                       </div>
                     </span>
                   </div>
                   <input type="number" id="ind-work-hours" class="calc-input" value="2080" min="0">
                 </div>
-                <div class="calc-form-group">
+                <div class="calc-form-group" id="ind-value-multiple-group" style="display: block;">
                   <div class="calc-label-with-tooltip">
                     <label for="ind-value-multiple" class="calc-label">Value of Work Multiple</label>
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        How much more value does this person's work generate vs. their compensation? Varies by profession and role. A conservative multiple would be 1.5 - 2.0x.
+                        How much more revenue does this person's work generate vs. their compensation? Varies by profession and role. A conservative estimate would be 1.5 - 2.0.
                       </div>
                     </span>
                   </div>
@@ -910,7 +910,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The expected percentage improvement in efficiency or productivity from AI tools. Explore different assumptions. Conservative estimate: 10%.
+                        Estimated increase in productivity using AI. Explore different assumptions. A conservative estimate would be 10%.
                       </div>
                     </span>
                   </div>
@@ -931,7 +931,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The number of annual training hours, including initial training and ongoing learning sessions.
+                        Estimated number of annual hours invested in AI education and training.
                       </div>
                     </span>
                   </div>
@@ -943,7 +943,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The annual cost for training programs, courses, or certifications for AI tools and skills (speakers, workshops, etc.).
+                        The annual cost of AI courses, education licenses and memberships, and related learning fees (workshops, conferences, etc.).
                       </div>
                     </span>
                   </div>
@@ -955,7 +955,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The annual cost for software licenses, subscriptions, and technologies for AI tools, including ChatGPT or Gemini license fees.
+                        The annual AI technology costs for software licenses and subscriptions, such as ChatGPT and Gemini.
                       </div>
                     </span>
                   </div>
@@ -1000,11 +1000,11 @@
                 </div>
                 <div class="calc-form-group">
                   <div class="calc-label-with-tooltip">
-                    <label for="team-comp" class="calc-label">Combined Annual Compensation ($)</label>
+                    <label for="team-comp" class="calc-label">Combined Compensation ($)</label>
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The total combined annual compensation for all team members including salaries, benefits, and bonuses.
+                        The total combined annual compensation for all learners, including salaries, benefits, and bonuses. Use estimated combined base salary if total comp is unknown.
                       </div>
                     </span>
                   </div>
@@ -1016,7 +1016,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        The average number of hours worked per year by team members. The standard work year based on 40 hr/week is 2,080 hours.
+                        The average number of hours worked per year by team members. The standard work year based on 40 hrs/week is 2,080 hours.
                       </div>
                     </span>
                   </div>
@@ -1024,27 +1024,27 @@
                 </div>
                 <div class="calc-form-group">
                   <div class="calc-label-with-tooltip">
-                    <label for="team-value-multiple" class="calc-label">Value of Work Multiple</label>
-                    <span class="calc-tooltip">
-                      <span class="calc-tooltip-icon">?</span>
-                      <div class="calc-tooltip-content">
-                        How much more value does the team's work generate vs. their compensation? Varies by profession and role. A conservative multiple would be 1.5 - 2.0x.
-                      </div>
-                    </span>
-                  </div>
-                  <input type="number" id="team-value-multiple" class="calc-input" value="2.0" step="0.1" min="0">
-                </div>
-                <div class="calc-form-group">
-                  <div class="calc-label-with-tooltip">
                     <label for="team-productivity-lift" class="calc-label">Est. Productivity/Efficiency Lift (%)</label>
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Expected percentage improvement in efficiency or productivity from AI tools. Explore different assumptions. Conservative estimate: 10%.
+                        Estimated increase in productivity per team member using AI. Explore different assumptions. A conservative estimate would be 10%.
                       </div>
                     </span>
                   </div>
                   <input type="number" id="team-productivity-lift" class="calc-input" placeholder="e.g., 15" max="100" min="0">
+                </div>
+                <div class="calc-form-group" id="team-value-multiple-group" style="display: none;">
+                  <div class="calc-label-with-tooltip">
+                    <label for="team-value-multiple" class="calc-label">Value of Work Multiple</label>
+                    <span class="calc-tooltip">
+                      <span class="calc-tooltip-icon">?</span>
+                      <div class="calc-tooltip-content">
+                        How much more revenue on average does a team member's work generate vs. their compensation? Varies by profession and role. A conservative estimate would be 1.5 - 2.0.
+                      </div>
+                    </span>
+                  </div>
+                  <input type="number" id="team-value-multiple" class="calc-input" value="2.0" step="0.1" min="0">
                 </div>
               </div>
             </div>
@@ -1052,7 +1052,7 @@
             <!-- Team Cost Analysis -->
             <div class="calc-card">
               <div class="calc-card-header">
-                <h3 class="calc-card-title">👥 Team Cost Analysis</h3>
+                <h3 class="calc-card-title">💰 Team Cost Analysis</h3>
               </div>
               <div class="calc-card-content">
                 <div class="calc-form-group">
@@ -1061,7 +1061,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Annual training hours needed per learner, including initial training and ongoing learning sessions.
+                        Estimated number of annual hours per learner invested in AI education and training.
                       </div>
                     </span>
                   </div>
@@ -1073,7 +1073,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Annual cost per learner for training programs, courses, or certifications for AI tools and skills (speakers, workshops, etc.).
+                        The annual cost per learner of AI courses, education licenses or memberships, and related learning fees (workshops, conferences, etc.).
                       </div>
                     </span>
                   </div>
@@ -1085,7 +1085,7 @@
                     <span class="calc-tooltip">
                       <span class="calc-tooltip-icon">?</span>
                       <div class="calc-tooltip-content">
-                        Annual cost per learner for software licenses, subscriptions, and technology costs for AI tools.
+                        The annual AI technology costs per learner for software licenses and subscriptions, such as ChatGPT and Gemini.
                       </div>
                     </span>
                   </div>
@@ -1283,7 +1283,40 @@
           if (calculationType === 'productivity') {
             label.textContent = 'Est. Productivity Lift (%)';
           } else {
-            label.textContent = 'Est. Efficiency Lift (%)';
+            label.textContent = 'Est. Time Savings (%)';
+          }
+        });
+        
+        // Show/hide value multiple field for individual calculations
+        var valueMultipleGroup = document.getElementById('ind-value-multiple-group');
+        if (valueMultipleGroup) {
+          if (calculationType === 'productivity') {
+            valueMultipleGroup.style.display = 'block';
+          } else {
+            valueMultipleGroup.style.display = 'none';
+          }
+        }
+
+        // Show/hide value multiple field for team calculations  
+        var teamValueMultipleGroup = document.getElementById('team-value-multiple-group');
+        if (teamValueMultipleGroup) {
+          if (calculationType === 'productivity') {
+            teamValueMultipleGroup.style.display = 'block';
+          } else {
+            teamValueMultipleGroup.style.display = 'none';
+          }
+        }
+        
+        // Update tooltip content for efficiency lift
+        var tooltipContents = document.querySelectorAll('#individual-tab .calc-tooltip-content');
+        tooltipContents.forEach(function(content) {
+          var text = content.textContent;
+          if (text.includes('expected percentage improvement in efficiency or productivity')) {
+            if (calculationType === 'efficiency') {
+              content.textContent = 'Estimated time saved using AI. Explore different assumptions. A conservative estimate would be 10%.';
+            } else {
+              content.textContent = 'The expected percentage improvement in efficiency or productivity from AI tools. Explore different assumptions. Conservative estimate: 10%.';
+            }
           }
         });
         
@@ -1317,7 +1350,6 @@
       
       function calculateIndividualEfficiency(values) {
         var costPerHour = values.comp / values.workHours;
-        var annualValueOfWork = values.comp;
         var hoursSaved = values.workHours * (values.estProductivityLift / 100);
         var valueOfProductivityLift = hoursSaved * costPerHour;
         var aiTrainingHumanCosts = values.aiTrainingHours * costPerHour;
@@ -1328,7 +1360,6 @@
         
         return {
           costPerHour: costPerHour,
-          annualValueOfWork: annualValueOfWork,
           valueOfProductivityLift: valueOfProductivityLift,
           hoursSaved: hoursSaved,
           aiTrainingHumanCosts: aiTrainingHumanCosts,
@@ -1455,26 +1486,31 @@
         
         var comp = parseFloat(document.getElementById('ind-comp').value);
         var workHours = parseFloat(document.getElementById('ind-work-hours').value);
-        var valueMultiple = parseFloat(document.getElementById('ind-value-multiple').value);
         var productivityLift = parseFloat(document.getElementById('ind-productivity-lift').value);
         var trainingHours = parseFloat(document.getElementById('ind-training-hours').value);
         var licenseFees = parseFloat(document.getElementById('ind-license-fees').value) || 0;
         var techCosts = parseFloat(document.getElementById('ind-tech-costs').value) || 0;
         
+        // For productivity calculations, we need value multiple
+        var valueMultiple = 2.0; // Default value for efficiency calculations
+        if (calculationType === 'productivity') {
+          valueMultiple = parseFloat(document.getElementById('ind-value-multiple').value);
+          if (!valueMultiple || valueMultiple <= 0) {
+            showError('Please enter a valid value multiple', 'ind-value-multiple');
+            return null;
+          }
+        }
+        
         if (!comp || comp <= 0) {
-          showError('Please enter a valid annual compensation', 'ind-comp');
+          showError('Please enter a valid compensation amount', 'ind-comp');
           return null;
         }
         if (!workHours || workHours <= 0) {
           showError('Please enter valid work hours', 'ind-work-hours');
           return null;
         }
-        if (!valueMultiple || valueMultiple <= 0) {
-          showError('Please enter a valid value multiple', 'ind-value-multiple');
-          return null;
-        }
         if (!productivityLift || productivityLift <= 0 || productivityLift > 100) {
-          showError('Please enter a valid productivity lift percentage (1-100)', 'ind-productivity-lift');
+          showError('Please enter a valid ' + (calculationType === 'productivity' ? 'productivity lift' : 'time savings') + ' percentage (1-100)', 'ind-productivity-lift');
           return null;
         }
         if (!trainingHours || trainingHours <= 0) {
@@ -1499,11 +1535,20 @@
         var learners = parseFloat(document.getElementById('team-learners').value);
         var comp = parseFloat(document.getElementById('team-comp').value);
         var workHours = parseFloat(document.getElementById('team-work-hours').value);
-        var valueMultiple = parseFloat(document.getElementById('team-value-multiple').value);
         var productivityLift = parseFloat(document.getElementById('team-productivity-lift').value);
         var trainingHours = parseFloat(document.getElementById('team-training-hours').value);
         var licenseFees = parseFloat(document.getElementById('team-license-fees').value) || 0;
         var techCosts = parseFloat(document.getElementById('team-tech-costs').value) || 0;
+        
+        // Only validate value multiple for productivity calculations
+        var valueMultiple = null;
+        if (calculationType === 'productivity') {
+          valueMultiple = parseFloat(document.getElementById('team-value-multiple').value);
+          if (!valueMultiple || valueMultiple <= 0) {
+            showError('Please enter a valid value multiple', 'team-value-multiple');
+            return null;
+          }
+        }
         
         if (!learners || learners <= 0) {
           showError('Please enter a valid number of learners', 'team-learners');
@@ -1515,10 +1560,6 @@
         }
         if (!workHours || workHours <= 0) {
           showError('Please enter valid work hours', 'team-work-hours');
-          return null;
-        }
-        if (!valueMultiple || valueMultiple <= 0) {
-          showError('Please enter a valid value multiple', 'team-value-multiple');
           return null;
         }
         if (!productivityLift || productivityLift <= 0 || productivityLift > 100) {
@@ -1553,7 +1594,7 @@
             '<div class="calc-result-section">' +
               '<h3>💚 Value Analysis Results</h3>' +
               '<div class="calc-metric">' +
-                '<div class="calc-metric-label">Cost Per Hour</div>' +
+                '<div class="calc-metric-label">Value of Work Per Hour</div>' +
                 '<div class="calc-metric-value">' + formatCurrency(results.costPerHour) + '</div>' +
               '</div>';
         
@@ -1562,13 +1603,15 @@
             '<div class="calc-metric-label">Est. Hours Saved</div>' +
             '<div class="calc-metric-value">' + (results.hoursSaved || 0).toLocaleString() + ' hrs</div>' +
           '</div>';
+        } else {
+          // For productivity calculations, show the annual value of work
+          resultsHtml += '<div class="calc-metric">' +
+            '<div class="calc-metric-label">Current Annual Value of Work</div>' +
+            '<div class="calc-metric-value">' + formatCurrency(results.annualValueOfWork) + '</div>' +
+          '</div>';
         }
         
         resultsHtml += '<div class="calc-metric">' +
-            '<div class="calc-metric-label">' + (calculationType === 'productivity' ? 'Current Annual Value of Work' : 'Annual Cost (Comp)') + '</div>' +
-            '<div class="calc-metric-value">' + formatCurrency(results.annualValueOfWork) + '</div>' +
-          '</div>' +
-          '<div class="calc-metric">' +
             '<div class="calc-metric-label">' + (calculationType === 'productivity' ? 'Productivity Lift Annual Value' : 'Value of Savings') + '</div>' +
             '<div class="calc-metric-value large success">' + formatCurrency(results.valueOfProductivityLift) + '</div>' +
           '</div>';
@@ -1606,15 +1649,8 @@
               '<div class="calc-metric-label">First Year ROI</div>' +
               '<div class="calc-metric-value large ' + (results.roi >= 0 ? 'success' : 'error') + '">' + formatPercent(results.roi) + '</div>' +
             '</div>' +
-            '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--calculator-gray-200);">' +
-              '<h4 style="font-size: 14px; font-weight: 600; color: var(--calculator-gray-900); margin: 0 0 8px 0;">Key Insights</h4>' +
-              '<div style="font-size: 12px; color: var(--calculator-gray-600);">';
-        
-        insights.forEach(function(insight) {
-          resultsHtml += '<div style="margin-bottom: 4px;">• ' + insight + '</div>';
-        });
-        
-        resultsHtml += '</div></div></div></div></div>';
+          '</div>' +
+        '</div></div>';
         
         document.getElementById('individual-results').innerHTML = resultsHtml;
         document.getElementById('individual-results').style.display = 'block';
@@ -1629,6 +1665,10 @@
           '<div class="calc-results-grid">' +
             '<div class="calc-result-section">' +
               '<h3>💚 Value Analysis Results</h3>' +
+              '<div class="calc-metric">' +
+                '<div class="calc-metric-label">Combined Work Hours</div>' +
+                '<div class="calc-metric-value">' + (results.combinedWorkHours || 0).toLocaleString() + ' hrs</div>' +
+              '</div>' +
               '<div class="calc-metric">' +
                 '<div class="calc-metric-label">Blended Cost Per Hour</div>' +
                 '<div class="calc-metric-value">' + formatCurrency(results.blendedCostPerHour) + '</div>' +
@@ -1661,16 +1701,9 @@
             '<div class="calc-metric-value large success">' + formatCurrency(results.totalValueOfProductivityLift) + '</div>' +
           '</div>';
         
-        if (calculationType === 'productivity') {
-          resultsHtml += '<div class="calc-metric">' +
-            '<div class="calc-metric-label">New Avg. Annual Value of Work</div>' +
-            '<div class="calc-metric-value large primary">' + formatCurrency((results.avgAnnualValueOfWork || 0) + (results.avgValueOfProductivityLift || 0)) + '</div>' +
-          '</div>';
-        }
-        
         resultsHtml += '</div>' +
           '<div class="calc-result-section">' +
-            '<h3>⚠️ Cost Analysis Results</h3>' +
+            '<h3>💰 Cost Analysis Results</h3>' +
             '<div class="calc-metric">' +
               '<div class="calc-metric-label">Combined Training Hours</div>' +
               '<div class="calc-metric-value">' + (results.combinedAiTrainingHours || 0).toLocaleString() + ' hrs</div>' +
@@ -1680,7 +1713,7 @@
               '<div class="calc-metric-value">' + formatCurrency(results.combinedAiTrainingHumanCosts) + '</div>' +
             '</div>' +
             '<div class="calc-metric">' +
-              '<div class="calc-metric-label">Combined License Fees</div>' +
+              '<div class="calc-metric-label">Combined Training Fees</div>' +
               '<div class="calc-metric-value">' + formatCurrency(results.combinedAiTrainingLicenseFees) + '</div>' +
             '</div>' +
             '<div class="calc-metric">' +
@@ -1702,13 +1735,7 @@
               '<div class="calc-metric-label">Team First Year ROI</div>' +
               '<div class="calc-metric-value large ' + (results.roi >= 0 ? 'success' : 'error') + '">' + formatPercent(results.roi) + '</div>' +
             '</div>' +
-            '<div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--calculator-gray-200);">' +
-              '<h4 style="font-size: 14px; font-weight: 600; color: var(--calculator-gray-900); margin: 0 0 8px 0;">Key Insights</h4>' +
-              '<div style="font-size: 12px; color: var(--calculator-gray-600);">';
-        
-        insights.forEach(function(insight) {
-          resultsHtml += '<div style="margin-bottom: 4px;">• ' + insight + '</div>';
-        });
+          '</div>';
         
         resultsHtml += '</div></div></div></div></div>';
         
