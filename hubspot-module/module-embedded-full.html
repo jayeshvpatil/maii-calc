@@ -1120,6 +1120,47 @@
       var currentTab = 'individual';
       var calculationType = 'productivity';
       
+      // Tracking functions
+      function trackSuccessfulCalculation(calculatorMode) {
+        // 1. Push to Google's Data Layer
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'calculator_success',
+          'calculator_name': 'AI Value Calculator',
+          'calculator_mode': calculatorMode // This will be 'Team' or 'Individual'
+        });
+
+        // 2. Send Custom Behavioral Event to HubSpot
+        var _hsq = window._hsq = window._hsq || [];
+        _hsq.push(['trackCustomBehavioralEvent', {
+          name: 'pe_20757840_calculator_success',
+          properties: {
+            calculator_name: 'AI Value Calculator',
+            calculator_mode: calculatorMode
+          }
+        }]);
+      }
+
+      function trackPdfExport(calculatorMode) {
+        // 1. Push to Google's Data Layer
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'event': 'export_pdf',
+          'calculator_name': 'AI Value Calculator',
+          'calculator_mode': calculatorMode // Pass 'Team' or 'Individual'
+        });
+
+        // 2. Send Custom Behavioral Event to HubSpot
+        var _hsq = window._hsq = window._hsq || [];
+        _hsq.push(['trackCustomBehavioralEvent', {
+          name: 'pe_20757840_calculator_export_pdf',
+          properties: {
+            calculator_name: 'AI Value Calculator',
+            calculator_mode: calculatorMode
+          }
+        }]);
+      }
+      
       // Utility functions
       function formatCurrency(amount) {
         return new Intl.NumberFormat('en-US', {
@@ -1759,6 +1800,9 @@
           insights = generateIndividualInsights(values, results);
           displayIndividualResults(results, insights);
           showSuccess('Individual ' + calculationType + ' analysis calculated successfully.');
+          
+          // Track successful calculation after results are displayed
+          trackSuccessfulCalculation('Individual');
         } catch (error) {
           showError('An error occurred during calculation. Please try again.');
           console.error('Calculation error:', error);
@@ -1780,6 +1824,9 @@
           insights = generateTeamInsights(values, results);
           displayTeamResults(results, insights);
           showSuccess('Team ' + calculationType + ' analysis calculated successfully.');
+          
+          // Track successful calculation after results are displayed
+          trackSuccessfulCalculation('Team');
         } catch (error) {
           showError('An error occurred during calculation. Please try again.');
           console.error('Calculation error:', error);
@@ -1789,6 +1836,21 @@
       // PDF export function
       window.exportToPDF = function() {
         try {
+          // Determine which calculator mode is currently active based on visible results
+          var calculatorMode = 'Individual'; // default
+          var individualResults = document.getElementById('individual-results');
+          var teamResults = document.getElementById('team-results');
+          
+          // Check which results section is currently displayed
+          if (teamResults && teamResults.style.display === 'block') {
+            calculatorMode = 'Team';
+          } else if (individualResults && individualResults.style.display === 'block') {
+            calculatorMode = 'Individual';
+          }
+          
+          // Track PDF export with the correct calculator mode
+          trackPdfExport(calculatorMode);
+          
           // Add print styles
           var printStyle = document.createElement('style');
           printStyle.textContent = '@media print { .calc-button, .no-print { display: none !important; } .hub_ai_value_calculator_wrapper { background: white !important; } }';
